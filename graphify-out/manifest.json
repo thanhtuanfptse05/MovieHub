@@ -1,0 +1,104 @@
+{
+  ".agents/skills/humanizer/.claude-plugin/marketplace.json": {
+    "mtime": 1792924030.2575953,
+    "seen": 1792924077.69535,
+    "ast_hash": "cc60b7e744a4ced10275e001a125962e",
+    "semantic_hash": "cc60b7e744a4ced10275e001a125962e"
+  },
+  ".agents/skills/humanizer/.claude-plugin/plugin.json": {
+    "mtime": 1792924030.2575953,
+    "seen": 1792924077.695356,
+    "ast_hash": "7730562fc927c1ebd0e83ee5465e2978",
+    "semantic_hash": "7730562fc927c1ebd0e83ee5465e2978"
+  },
+  ".agents/skills/humanizer/.cursor-plugin/plugin.json": {
+    "mtime": 1792924030.2586,
+    "seen": 1792924077.6953585,
+    "ast_hash": "3a2d8b2a8b958e05e3809c76c6610592",
+    "semantic_hash": "3a2d8b2a8b958e05e3809c76c6610592"
+  },
+  ".agents/skills/humanizer/scripts/validate-package.py": {
+    "mtime": 1792924030.2641482,
+    "seen": 1792924077.6953595,
+    "ast_hash": "ee1a260d698903e50f75d7b4472b97bc",
+    "semantic_hash": "ee1a260d698903e50f75d7b4472b97bc"
+  },
+  ".specify/init-options.json": {
+    "mtime": 1792923940.2312882,
+    "seen": 1792924077.6953604,
+    "ast_hash": "5be30bfde9f67b62b17d324e2a093d34",
+    "semantic_hash": "5be30bfde9f67b62b17d324e2a093d34"
+  },
+  ".specify/integration.json": {
+    "mtime": 1792923939.7033315,
+    "seen": 1792924077.6953616,
+    "ast_hash": "d04100042e7fa7f7519252234b43e584",
+    "semantic_hash": "d04100042e7fa7f7519252234b43e584"
+  },
+  ".specify/integrations/agy.manifest.json": {
+    "mtime": 1792923939.6992717,
+    "seen": 1792924077.6953626,
+    "ast_hash": "3c3088761a1bbeb8d0757eda74f31013",
+    "semantic_hash": "3c3088761a1bbeb8d0757eda74f31013"
+  },
+  ".specify/integrations/speckit.manifest.json": {
+    "mtime": 1792923940.1789353,
+    "seen": 1792924077.6953635,
+    "ast_hash": "54afd9717e1503f97de23db157f839df",
+    "semantic_hash": "54afd9717e1503f97de23db157f839df"
+  },
+  ".specify/memory/.constitution-template.json": {
+    "mtime": 1792923940.2366993,
+    "seen": 1792924077.695369,
+    "ast_hash": "7e3332a78cec1722b4351c6bf52dfc51",
+    "semantic_hash": "7e3332a78cec1722b4351c6bf52dfc51"
+  },
+  ".specify/scripts/powershell/check-prerequisites.ps1": {
+    "mtime": 1792923939.8849626,
+    "seen": 1792924077.6953697,
+    "ast_hash": "ab9d4c9d5772d28c6b2150b1f53ac638",
+    "semantic_hash": "ab9d4c9d5772d28c6b2150b1f53ac638"
+  },
+  ".specify/scripts/powershell/common.ps1": {
+    "mtime": 1792923939.9114473,
+    "seen": 1792924077.6953707,
+    "ast_hash": "6d1dc2322173d3cd13a3633d61324293",
+    "semantic_hash": "6d1dc2322173d3cd13a3633d61324293"
+  },
+  ".specify/scripts/powershell/create-new-feature.ps1": {
+    "mtime": 1792923939.9662848,
+    "seen": 1792924077.6953719,
+    "ast_hash": "fad051375e6dcd47030cc49188472fe1",
+    "semantic_hash": "fad051375e6dcd47030cc49188472fe1"
+  },
+  ".specify/scripts/powershell/resolve-template.ps1": {
+    "mtime": 1792923939.9897642,
+    "seen": 1792924077.6953726,
+    "ast_hash": "645ad018c6297df6e23949ac3e915749",
+    "semantic_hash": "645ad018c6297df6e23949ac3e915749"
+  },
+  ".specify/scripts/powershell/setup-plan.ps1": {
+    "mtime": 1792923939.9956074,
+    "seen": 1792924077.6953733,
+    "ast_hash": "02abf0794256a7423782adc760f0e0ca",
+    "semantic_hash": "02abf0794256a7423782adc760f0e0ca"
+  },
+  ".specify/scripts/powershell/setup-tasks.ps1": {
+    "mtime": 1792923940.000363,
+    "seen": 1792924077.695374,
+    "ast_hash": "9aa2f52ce7abece8476845b1f21a0ced",
+    "semantic_hash": "9aa2f52ce7abece8476845b1f21a0ced"
+  },
+  ".specify/workflows/workflow-registry.json": {
+    "mtime": 1792923940.2274108,
+    "seen": 1792924077.6953752,
+    "ast_hash": "0fea98555a97b86e5421a62c43c8acf7",
+    "semantic_hash": "0fea98555a97b86e5421a62c43c8acf7"
+  },
+  "skills-lock.json": {
+    "mtime": 1792924032.085295,
+    "seen": 1792924077.695376,
+    "ast_hash": "a6826b299987bb629c6a44dd76669eaa",
+    "semantic_hash": "a6826b299987bb629c6a44dd76669eaa"
+  }
+}

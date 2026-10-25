@@ -1,0 +1,24 @@
+# NetBeans Ant Web Project - MovieHub .gitignore
+
+# Build outputs
+/build/
+/dist/
+
+# NetBeans user private configuration
+/nbproject/private/
+
+# System and editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+*.tmp
+*.bak
+
+# IDE configs
+.idea/
+*.iml
+.vscode/
+
+# Temporary scratch
+scratch/
