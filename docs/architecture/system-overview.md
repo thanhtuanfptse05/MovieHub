@@ -31,17 +31,21 @@ MovieHub follows a 3-tier MVC pattern implemented on Jakarta EE 10:
                            │ TCP / IP (Port 1433)
 ┌──────────────────────────▼─────────────────────────────┐
 │              Database: Microsoft SQL Server            │
-│  9 Core Tables: Users, Movies, Categories, etc.        │
+│  8 Active Tables: Users, Movies, Categories, etc.      │
 └────────────────────────────────────────────────────────┘
 ```
 
-## 2. Database Tables Summary (9 Entities)
-1. `Users`: Account credentials, profile details, roles (`CUSTOMER`, `ADMIN`), failed login counters.
-2. `Movies`: Title, synopsis, director, release year, duration, poster URL, trailer URL, view counter, average rating.
-3. `Categories`: Genre taxonomy (Action, Drama, Sci-Fi, etc.).
-4. `MovieCategories`: Many-to-Many junction between Movies and Categories.
-5. `Favorites`: User bookmarked movies (`user_id`, `movie_id`, `created_at`).
-6. `Reviews`: User star ratings (1-5), review comments, moderation status (`APPROVED`, `PENDING_REVIEW`, `FLAGGED`).
-7. `Questions`: User community inquiries for movies.
-8. `Answers`: Responses to questions, status (`ACCEPTED`, `PENDING`).
-9. `PasswordResetTokens`: Temporary password recovery tokens (15-min TTL).
+## 2. Database Tables Summary
+
+See the [SQL Server schema and ERD](database.md) and [setup scripts](../../database/README.md).
+
+1. `Users`: Profiles, BCrypt hashes, USER/ADMIN roles, ACTIVE/INACTIVE status, version and credentials_version.
+2. `Movies`: Metadata, media URLs, DRAFT/PUBLISHED/HIDDEN status, BIGINT view counter; ratings are calculated from reviews.
+3. `Categories`: Genre names and slugs, with soft deletion.
+4. `MovieCategories`: Many-to-many junction with a composite primary key.
+5. `Favorites`: Unique user/movie pair, with soft deletion and restoration.
+6. `Reviews`: Ratings 1–5, plain text, PENDING/APPROVED/REJECTED status, moderation audit, version/content_revision and soft deletion.
+7. `Questions`: Movie discussion questions and moderation audit.
+8. `Answers`: Question replies and moderation audit; no accepted-answer feature in MVP.
+
+PasswordResetTokens belongs to the historical nine-table design. R-01 no longer uses it; setup preserves it if present and does not create it on a new database.

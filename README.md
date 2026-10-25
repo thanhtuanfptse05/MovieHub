@@ -6,12 +6,12 @@ MovieHub is a Java Ant Web Application developed according to **Spec-Driven Deve
 ---
 
 ## 🚀 Key Features & Modules
-- **001-auth**: User Authentication (Register, Login, Session Management, Password Recovery via Token).
-- **002-user-profile**: User Profile Management & Security Settings (Change Password).
+- **001-auth**: User Authentication (Register, Login, Session Management, Password Recovery via the R-01 session flow).
+- **002-user-profile**: User Profile Management.
 - **003-movie-catalog**: Movie Catalog, Multi-attribute Filtering, Keyword Search & Detail View.
 - **004-favorites**: Personal Movie Watchlist / Bookmarking.
 - **005-reviews-rating**: Community Star Ratings (1-5) & Written Reviews with Auto-calculated Average.
-- **006-qa**: Interactive Q&A Discussions on Movies with Accepted Answer status.
+- **006-qa**: Interactive Q&A Discussions on Movies with content moderation.
 - **007-admin-crud**: Administrative Management for Movies, Categories, and User Accounts with Soft-Delete.
 - **008-admin-analytics**: Executive Dashboard with KPI counters, Top-viewed & Top-rated Reports.
 
@@ -56,6 +56,8 @@ MovieHub/
 ---
 
 ## ⚡ Build & Run
+Database setup, SQL scripts and connection instructions: [database/README.md](database/README.md). The [schema design](docs/architecture/database.md) includes the entity relationships and constraints.
+
 Compile the project using the NetBeans bundled Ant:
 ```powershell
 & "C:\Program Files\NetBeans-17\netbeans\extide\ant\bin\ant.bat" compile
