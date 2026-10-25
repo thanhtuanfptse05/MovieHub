@@ -1,0 +1,1 @@
+{"nodes": [{"id": "pkg_supply_chain_risk_auditor_scripts", "label": "supply-chain-risk-auditor-scripts", "file_type": "code", "type": "package", "ecosystem": "python", "source_file": ".agents/skills/supply-chain-risk-auditor/scripts/pyproject.toml", "source_location": "L1", "version": "0.1.0"}], "edges": []}

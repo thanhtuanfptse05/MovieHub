@@ -36,6 +36,7 @@ Version: 1.0.0 | Status: LOCKED | Ratified: 2026-10-25 | Project: MovieHub (PRJ3
 - Consult `graphify` architecture graphs for dependency analysis.
 - Use `speckit-*` commands for spec lifecycle, and Superpowers TDD for implementation.
 - Filter prose and documentation through `humanizer`.
+- Frontend Art Direction: Mandate `design-taste-frontend` (`taste-skill v2.1.5`) via `scripts/draw.mjs` (culture/cinema for public, analytics for admin) and verify with `scripts/inspect.mjs`.
 
 ### VII. Git Discipline & GitHub Delivery
 - Feature work occurs on `feat/{feature-name}` branches.

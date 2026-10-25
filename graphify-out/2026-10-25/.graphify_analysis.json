@@ -1,0 +1,155 @@
+{
+  "communities": {
+    "0": [
+      "agents_skills_humanizer_claude_plugin_plugin",
+      "agents_skills_humanizer_claude_plugin_plugin_author",
+      "agents_skills_humanizer_claude_plugin_plugin_author_name",
+      "agents_skills_humanizer_claude_plugin_plugin_author_url",
+      "agents_skills_humanizer_claude_plugin_plugin_description",
+      "agents_skills_humanizer_claude_plugin_plugin_homepage",
+      "agents_skills_humanizer_claude_plugin_plugin_keywords",
+      "agents_skills_humanizer_claude_plugin_plugin_license",
+      "agents_skills_humanizer_claude_plugin_plugin_name",
+      "agents_skills_humanizer_claude_plugin_plugin_repository",
+      "agents_skills_humanizer_claude_plugin_plugin_schema",
+      "agents_skills_humanizer_claude_plugin_plugin_skills",
+      "agents_skills_humanizer_claude_plugin_plugin_version"
+    ],
+    "1": [
+      "agents_skills_humanizer_scripts_validate_package",
+      "agents_skills_humanizer_scripts_validate_package_rationale_2",
+      "agents_skills_humanizer_scripts_validate_package_read_package_file",
+      "agents_skills_humanizer_scripts_validate_package_require_match",
+      "json",
+      "match",
+      "path",
+      "pathlib",
+      "re"
+    ],
+    "2": [
+      "specify_scripts_powershell_common",
+      "specify_scripts_powershell_common_find_specifyroot",
+      "specify_scripts_powershell_common_get_currentbranch",
+      "specify_scripts_powershell_common_get_featurepathsenv",
+      "specify_scripts_powershell_common_get_reporoot",
+      "specify_scripts_powershell_common_resolve_specifyinitdir",
+      "specify_scripts_powershell_common_save_featurejson",
+      "specify_scripts_powershell_common_test_dirhasfiles",
+      "specify_scripts_powershell_common_test_fileexists"
+    ],
+    "3": [
+      "agents_skills_humanizer_claude_plugin_marketplace",
+      "agents_skills_humanizer_claude_plugin_marketplace_description",
+      "agents_skills_humanizer_claude_plugin_marketplace_name",
+      "agents_skills_humanizer_claude_plugin_marketplace_owner",
+      "agents_skills_humanizer_claude_plugin_marketplace_owner_name",
+      "agents_skills_humanizer_claude_plugin_marketplace_owner_url",
+      "agents_skills_humanizer_claude_plugin_marketplace_plugins",
+      "agents_skills_humanizer_claude_plugin_marketplace_schema"
+    ],
+    "4": [
+      "specify_scripts_powershell_create_new_feature",
+      "specify_scripts_powershell_create_new_feature_convertto_cleanbranchname",
+      "specify_scripts_powershell_create_new_feature_get_branchname",
+      "specify_scripts_powershell_create_new_feature_get_fittedbranchname",
+      "specify_scripts_powershell_create_new_feature_get_highestnumberfromspecs",
+      "specify_scripts_powershell_create_new_feature_test_specprefixinuse"
+    ],
+    "5": [
+      "specify_scripts_powershell_common_get_normalizedpriority",
+      "specify_scripts_powershell_common_get_python3command",
+      "specify_scripts_powershell_common_get_sortedextensionids",
+      "specify_scripts_powershell_common_resolve_template",
+      "specify_scripts_powershell_common_resolve_templatecontent"
+    ],
+    "6": [
+      "specify_scripts_powershell_common_format_speckitcommand",
+      "specify_scripts_powershell_common_get_invokeseparator"
+    ],
+    "7": [
+      "specify_scripts_powershell_check_prerequisites"
+    ],
+    "8": [
+      "specify_scripts_powershell_resolve_template"
+    ],
+    "9": [
+      "specify_scripts_powershell_setup_plan"
+    ],
+    "10": [
+      "specify_scripts_powershell_setup_tasks"
+    ]
+  },
+  "cohesion": {
+    "0": 0.15384615384615385,
+    "1": 0.2222222222222222,
+    "2": 0.3611111111111111,
+    "3": 0.25,
+    "4": 0.4,
+    "5": 0.6,
+    "6": 1.0,
+    "7": 1.0,
+    "8": 1.0,
+    "9": 1.0,
+    "10": 1.0
+  },
+  "gods": [
+    {
+      "id": "specify_scripts_powershell_common_get_featurepathsenv",
+      "label": "Get-FeaturePathsEnv()",
+      "degree": 4
+    },
+    {
+      "id": "specify_scripts_powershell_common_get_reporoot",
+      "label": "Get-RepoRoot()",
+      "degree": 4
+    },
+    {
+      "id": "specify_scripts_powershell_common_get_normalizedpriority",
+      "label": "Get-NormalizedPriority()",
+      "degree": 4
+    },
+    {
+      "id": "specify_scripts_powershell_common_get_sortedextensionids",
+      "label": "Get-SortedExtensionIds()",
+      "degree": 4
+    },
+    {
+      "id": "specify_scripts_powershell_common_resolve_templatecontent",
+      "label": "Resolve-TemplateContent()",
+      "degree": 4
+    },
+    {
+      "id": "agents_skills_humanizer_claude_plugin_plugin_author",
+      "label": "author",
+      "degree": 3
+    },
+    {
+      "id": "agents_skills_humanizer_claude_plugin_marketplace_owner",
+      "label": "owner",
+      "degree": 3
+    },
+    {
+      "id": "specify_scripts_powershell_common_resolve_template",
+      "label": "Resolve-Template()",
+      "degree": 3
+    },
+    {
+      "id": "agents_skills_humanizer_scripts_validate_package_read_package_file",
+      "label": "read_package_file()",
+      "degree": 2
+    },
+    {
+      "id": "agents_skills_humanizer_scripts_validate_package_require_match",
+      "label": "require_match()",
+      "degree": 2
+    }
+  ],
+  "surprises": [],
+  "questions": [
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `name`, `url`, `description` to the rest of the system?",
+      "why": "17 weakly-connected nodes found - possible documentation gaps or missing edges."
+    }
+  ]
+}

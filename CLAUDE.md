@@ -18,6 +18,7 @@
   3. Use `/speckit-*` commands for spec generation, analysis, and task execution.
   4. Follow Superpowers TDD (`/test-driven-development`) and evidence verification (`/verification-before-completion`).
   5. Clean documentation and comments using `/humanizer`.
+  6. Frontend Art Direction: Use `design-taste-frontend` (`taste-skill v2.1.5`) via `scripts/draw.mjs` for distinctive cinema aesthetics (public) and `draw.mjs --app` (admin/analytics), verified by `inspect.mjs`.
 - **Git Delivery**: After passing the 15-item validation checklist in `checklists.md`, commit with Conventional Commits and push branch to GitHub.
 
 ### Build Commands

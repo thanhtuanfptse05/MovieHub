@@ -20,5 +20,6 @@ Desktop.ini
 *.iml
 .vscode/
 
-# Temporary scratch
+# Temporary scratch & taste-skill artifacts
 scratch/
+.taste-skill/

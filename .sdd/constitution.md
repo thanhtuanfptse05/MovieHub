@@ -83,6 +83,13 @@ Version: 1.0.0 | Status: LOCKED | Ratified: 2026-10-25 | Project: MovieHub (PRJ3
 ## TOOL-04: Prose Quality via Humanizer
 - All documentation, specs, and comments must pass through `/humanizer` to eliminate robotic AI writing patterns, stock clichés, and empty filler.
 
+## TOOL-05: Frontend Art Direction via taste-skill (design-taste-frontend)
+- All user-facing views and JSP interfaces MUST be designed using `design-taste-frontend` (`taste-skill v2.1.5`):
+  - Public pages: Run `scripts/draw.mjs --sector culture` for distinct cinema art direction, atmospheric palettes, and zero AI template slop.
+  - App screens (Admin & Analytics): Run `scripts/draw.mjs --app --kind analytics` for quiet, legible, data-focused panels.
+  - Quality verification: Run `scripts/inspect.mjs` to audit layout and contrast in a headless browser before final JSP delivery.
+  - Constraints: All UI must compile to pure JSTL views under `/WEB-INF/views/` with zero scriptlets.
+
 ═══════════════════════════════════════════════════════════════════════════
   LAYER 4: GIT CONVENTIONS & DELIVERY GATE
 ═══════════════════════════════════════════════════════════════════════════

@@ -125,9 +125,32 @@ You have 42 modern agent skills pre-installed in [`.agents/skills/`](file:///d:/
 
 ### 4. Code & Text Refinement
 - `/humanizer`: Polish documentation, specs, and comments to eliminate robotic AI cliches, overused jargon, and empty filler.
-- `/frontend-design`: Create distinctive, premium UI for movie pages, avoiding generic templates.
+- `/frontend-design`: Guidance for distinctive, intentional visual layout.
 - `/webapp-testing`: Automated browser interaction and screenshot verification using Playwright.
 - `/security-best-practices` & `/security-threat-model`: Identify threat boundaries, SQL injection risks, and XSS vulnerabilities.
+
+### 5. Frontend Art Direction & Anti-Slop UI Engine (`taste-skill` / `design-taste-frontend`)
+The **`design-taste-frontend`** skill ([`taste-skill v2.1.5`](file:///d:/wd%20c%20sang%20d/Documents/NetBeansProjects/MovieHub/.agents/skills/design-taste-frontend)) is the **MANDATORY art direction engine** for all MovieHub views to guarantee distinctive, cinema-grade aesthetics and eliminate generic AI slop:
+- **Public Cinema Pages (Home, Movie Catalog, Movie Detail, Watchlist)**:
+  - Run art direction deal:
+    ```powershell
+    node .agents/skills/design-taste-frontend/scripts/draw.mjs --sector culture --brief "MovieHub - Cinematic Movie Streaming & Community Review Platform"
+    ```
+  - **Cinema Aesthetics**: Dark cinematic background, high typographic contrast, immersive backdrop imagery, distinct color accents (e.g. amber, neon cyan, warm gold), zero boring centered hero cards.
+- **Admin & Management Screens (Dashboard, Analytics, Movie/User CRUD)**:
+  - Run app-screen design deal:
+    ```powershell
+    node .agents/skills/design-taste-frontend/scripts/draw.mjs --app --kind analytics --brief "MovieHub Admin Analytics & Content Management"
+    ```
+  - **App Screen Discipline**: Quiet panels, aligned numeric figures, color reserved strictly for KPI status tags (`ACTIVE`, `PENDING`, `BANNED`), dense and readable tables, collapsable navigation on mobile.
+- **Real Imagery & Open Archives**:
+  - Run `node .agents/skills/design-taste-frontend/scripts/assets.mjs` to fetch authentic film photography and public domain cinema assets with attribution.
+- **Browser Quality Inspection**:
+  - Run `node .agents/skills/design-taste-frontend/scripts/inspect.mjs` to test rendered views in headless browser across 3 viewports (desktop, tablet, mobile) and verify zero alignment or contrast slop.
+- **Strict MovieHub Guardrail Compatibility**:
+  - All UI generated under `design-taste-frontend` MUST compile into pure JSP + JSTL views under `/WEB-INF/views/`.
+  - **100% Pure JSTL/EL**: ZERO Java scriptlets (`<% %>`). Dynamic attributes rendered via `<c:out value="${...}" escapeXml="true" />`.
+  - All stylesheets placed in `/assets/css/` and scripts in `/assets/js/`.
 
 ---
 
