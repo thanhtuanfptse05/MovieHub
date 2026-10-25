@@ -818,3 +818,210 @@ select.mh-input { appearance: auto; padding: 0 12px; }
   color: #9ca3af;
   font-size: 0.9rem;
 }
+
+/* 006-qa: Q&A Discussions */
+.mh-qa-section {
+  margin-top: 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 32px;
+}
+.mh-qa-ask-card {
+  margin-bottom: 24px;
+}
+.mh-qa-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+.mh-char-counter {
+  display: block;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-top: 4px;
+  text-align: right;
+}
+.mh-qa-my-submissions {
+  margin-top: 24px;
+  margin-bottom: 32px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 20px;
+}
+.mh-qa-my-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+.mh-qa-my-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 16px;
+}
+.mh-qa-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.mh-qa-tags {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.mh-tag-type {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.mh-tag-type.is-q {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+.mh-tag-type.is-a {
+  background: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+.mh-qa-parent-ref {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin-bottom: 6px;
+}
+.mh-qa-parent-ref em {
+  color: #e4e4e7;
+  font-style: italic;
+}
+.mh-qa-thread {
+  margin-top: 32px;
+  margin-bottom: 36px;
+  background: rgba(24, 24, 27, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 24px;
+}
+.mh-qa-thread-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.mh-qa-thread-status {
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.mh-qa-thread-question {
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 20px;
+}
+.mh-qa-thread-title {
+  font-size: 1.15rem;
+  color: #f3f4f6;
+  margin-top: 12px;
+  line-height: 1.5;
+}
+.mh-qa-author-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.mh-qa-thread-answers {
+  margin-top: 20px;
+}
+.mh-qa-answers-heading {
+  font-size: 1rem;
+  color: #e4e4e7;
+  margin-bottom: 16px;
+}
+.mh-qa-answer-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.mh-qa-answer-body {
+  margin-top: 10px;
+  color: #d1d5db;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+.mh-qa-reply-box {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.mh-guest-prompt-sm {
+  padding: 14px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  margin-top: 16px;
+}
+.mh-guest-prompt-sm .mh-link {
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 500;
+}
+.mh-guest-prompt-sm .mh-link:hover {
+  text-decoration: underline;
+}
+.mh-qa-community-list {
+  margin-top: 36px;
+}
+.mh-qa-list-title {
+  font-size: 1.1rem;
+  color: #f3f4f6;
+  margin-bottom: 16px;
+}
+.mh-qa-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.mh-qa-card {
+  background: var(--surface-color, #18181b);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+.mh-qa-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.mh-qa-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.mh-qa-card-body {
+  color: #e4e4e7;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.mh-qa-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.mh-qa-answer-count-badge {
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: #d4d4d8;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-weight: 500;
+}
+

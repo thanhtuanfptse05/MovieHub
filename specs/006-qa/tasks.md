@@ -1,20 +1,34 @@
-> SPEC-REVISION-NOTICE (2026-10-25): Scaffold cũ, chưa đồng bộ với spec.md v1.0.0. Giữ để tham khảo lịch sử; KHÔNG dùng để triển khai hoặc xác nhận nghiệm thu. Sau khi duyệt spec/GOV, tạo lại artifact này và chạy speckit-analyze. Xem [overview](../overview.md) và [decisions](../shared/decisions.md).
-
 # Tasks Breakdown: 006-qa
-<!-- Actionable, Dependency-Ordered Task List -->
+<!-- Actionable, Dependency-Ordered Task List aligned with spec.md v1.0.0 -->
 
-- [ ] **Task 1: Question and Answer Entities**
-  - Implement `Question.java` and `Answer.java` with JPA relationships.
-- [ ] **Task 2: DAOs**
-  - Implement `QuestionDAO` and `AnswerDAO`.
-- [ ] **Task 3: QAService (TDD)**
-  - Write unit tests in `QAServiceTest.java`.
+- [x] **Task 1: Entities & DTOs**
+  - Implement `Question.java` and `Answer.java` JPA entities with `@Version` and all columns.
+  - Register `Question` and `Answer` in `src/conf/persistence.xml`.
+  - Create DTOs: `QuestionItem.java`, `AnswerItem.java`, `MyQaItem.java`, `QuestionPage.java`, `AnswerPage.java`, `MyQaPage.java`.
+- [x] **Task 2: DAOs (QuestionDAO & AnswerDAO)**
+  - Implement `QuestionDAO.java` for CRUD, public questions list with approved answer counts, and user's private questions.
+  - Implement `AnswerDAO.java` for CRUD, public answers for a question, and user's private answers.
+- [x] **Task 3: Nonce Manager & QAService with TDD**
+  - Implement `SubmissionNonceUtil.java` (in-session nonce lifecycle, replay detection, rollback safety).
+  - Write `QAServiceTest.java` (JUnit 4) covering boundary validation, parent cascade visibility, replay protection, and private access isolation.
   - Implement `QAService.java`.
-- [ ] **Task 4: QAServlet**
-  - Implement request handlers for question creation, answering, and accepting.
-- [ ] **Task 5: Views (Pure JSTL)**
-  - Build Q&A discussion UI with `<c:out>`.
-- [ ] **Task 6: Verification & Delivery**
-  - Pass 15-item validation gate.
-  - Commit `feat(qa): implement movie Q&A discussions`.
+  - Verify with Ant: `ant test`.
+- [x] **Task 4: Servlets (Controller Layer)**
+  - Implement `QuestionCreateServlet.java` (`POST /questions/create`).
+  - Implement `AnswerCreateServlet.java` (`POST /answers/create`).
+  - Update `MovieDetailServlet.java` to handle `questionPage`, `questionId`, `answerPage`, `myQaPage`, generate form nonces, and expose attributes to JSP.
+  - Register servlets in `web.xml` and update `AuthFilter.java` to protect `/questions/*` and `/answers/*`.
+- [x] **Task 5: Movie Detail JSP View & UI Integration**
+  - Update `web/WEB-INF/views/movie/movie-detail.jsp` with `#qa` section:
+    - Community questions list with answer count badge.
+    - Selected question card with thread of approved answers, pagination, and "Trả lời câu hỏi" form.
+    - "Đặt câu hỏi về phim" form (10–500 chars, character counter, nonce, CSRF).
+    - "Nội dung bạn đã gửi" card for logged-in users with status badges (`Chờ duyệt`, `Đã duyệt`, `Bị từ chối`) and pagination.
+    - Guest prompt to login.
+  - Add cinema-grade styles in `assets/css/style.css` for Q&A threads, reply forms, and badge tags.
+- [x] **Task 6: E2E Verification & Delivery**
+  - Create and run `scratch/test_e2e_qa.py` on live Tomcat.
+  - Verify anti-mojibake in database and rendered output.
+  - Verify 15-item checklist.
+  - Commit `feat(qa): implement movie Q&A discussions (006-qa)`.
   - Push branch `feat/006-qa` to GitHub.

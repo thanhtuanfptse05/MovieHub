@@ -100,7 +100,8 @@ public class AuthFilter implements Filter {
     }
 
     private boolean isProtectedUserPath(String path) {
-        return path.startsWith("/profile") || path.startsWith("/favorites") || path.startsWith("/reviews");
+        return path.startsWith("/profile") || path.startsWith("/favorites") || path.startsWith("/reviews")
+                || path.startsWith("/questions") || path.startsWith("/answers");
     }
 
     @Override

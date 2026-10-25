@@ -27,12 +27,14 @@ public class MovieDetailServlet extends HttpServlet {
     private MovieService movieService;
     private com.moviehub.service.FavoriteService favoriteService;
     private com.moviehub.service.ReviewService reviewService;
+    private com.moviehub.service.QAService qaService;
 
     @Override
     public void init() throws ServletException {
         this.movieService = new MovieService();
         this.favoriteService = new com.moviehub.service.FavoriteService();
         this.reviewService = new com.moviehub.service.ReviewService();
+        this.qaService = new com.moviehub.service.QAService();
     }
 
     @Override
@@ -88,11 +90,48 @@ public class MovieDetailServlet extends HttpServlet {
 
             com.moviehub.dto.ReviewPage reviewsPage = reviewService.getPublicReviews(id, reviewPage);
 
+            // 006-qa: Load Q&A data
+            int qPage = parseInt(request.getParameter("questionPage"), 1);
+            int aPage = parseInt(request.getParameter("answerPage"), 1);
+            int myPage = parseInt(request.getParameter("myQaPage"), 1);
+            Long selectedQId = parseId(request.getParameter("questionId"));
+
+            com.moviehub.dto.QuestionPage questionsPage = qaService.getPublicQuestions(id, qPage, 10);
+            com.moviehub.dto.QuestionItem selectedQuestion = null;
+            com.moviehub.dto.AnswerPage answersPage = null;
+
+            if (selectedQId != null) {
+                selectedQuestion = qaService.getPublicQuestionDetail(selectedQId).orElse(null);
+                if (selectedQuestion != null && selectedQuestion.getMovieId().equals(id)) {
+                    answersPage = qaService.getPublicAnswers(selectedQId, aPage, 10);
+                } else {
+                    selectedQuestion = null;
+                }
+            }
+
+            com.moviehub.dto.MyQaPage myQaPageData = null;
+            if (userId != null && session != null) {
+                myQaPageData = qaService.getUserSubmissions(userId, id, myPage, 10);
+                String questionNonce = com.moviehub.util.SubmissionNonceUtil.generateNonce(
+                        session, userId, com.moviehub.util.SubmissionNonceUtil.TYPE_QUESTION, id);
+                request.setAttribute("questionNonce", questionNonce);
+
+                if (selectedQuestion != null) {
+                    String answerNonce = com.moviehub.util.SubmissionNonceUtil.generateNonce(
+                            session, userId, com.moviehub.util.SubmissionNonceUtil.TYPE_ANSWER, selectedQuestion.getId());
+                    request.setAttribute("answerNonce", answerNonce);
+                }
+            }
+
             request.setAttribute("movie", detail);
             request.setAttribute("isFavorited", isFavorited);
             request.setAttribute("similar", movieService.getSimilar(id));
             request.setAttribute("reviewsPage", reviewsPage);
             request.setAttribute("userReview", userReview);
+            request.setAttribute("questionsPage", questionsPage);
+            request.setAttribute("selectedQuestion", selectedQuestion);
+            request.setAttribute("answersPage", answersPage);
+            request.setAttribute("myQaPageData", myQaPageData);
             request.getRequestDispatcher("/WEB-INF/views/movie/movie-detail.jsp").forward(request, response);
         } catch (RuntimeException ex) {
             LOGGER.log(Level.SEVERE, "Failed loading movie " + id + ": " + ex.getMessage(), ex);
@@ -122,5 +161,17 @@ public class MovieDetailServlet extends HttpServlet {
         }
         long value = Long.parseLong(raw.trim());
         return value > 0 ? value : null;
+    }
+
+    static int parseInt(String raw, int defaultVal) {
+        if (raw == null || !raw.trim().matches("[0-9]{1,9}")) {
+            return defaultVal;
+        }
+        try {
+            int val = Integer.parseInt(raw.trim());
+            return val > 0 ? val : defaultVal;
+        } catch (NumberFormatException ex) {
+            return defaultVal;
+        }
     }
 }

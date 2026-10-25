@@ -348,6 +348,314 @@
             </div>
         </section>
 
+        <!-- Q&A Discussions Section (006-qa) -->
+        <section id="qa" class="mh-section mh-qa-section" aria-labelledby="qa-heading">
+            <div class="mh-section-header">
+                <h2 id="qa-heading" class="mh-section-title">Hỏi đáp về phim</h2>
+                <span class="mh-count-sub"><c:out value="${questionsPage.totalCount}" /> câu hỏi cộng đồng</span>
+            </div>
+
+            <!-- Flash notification if available -->
+            <c:if test="${not empty sessionScope.flashMessage}">
+                <div class="mh-alert mh-alert-success" role="status">
+                    <c:out value="${sessionScope.flashMessage}" />
+                </div>
+                <c:remove var="flashMessage" scope="session" />
+            </c:if>
+
+            <!-- Ask Question Card (Authenticated) or Login Prompt (Guest) -->
+            <c:choose>
+                <c:when test="${not empty sessionScope.userId}">
+                    <div class="mh-review-box mh-qa-ask-card">
+                        <h3 class="mh-form-subtitle">Đặt câu hỏi về bộ phim</h3>
+                        <form action="${ctx}/questions/create" method="POST" class="mh-qa-form">
+                            <input type="hidden" name="csrfToken" value="<c:out value="${csrfToken}" escapeXml="true" />">
+                            <input type="hidden" name="movieId" value="${movie.id}">
+                            <input type="hidden" name="submissionId" value="${questionNonce}">
+
+                            <div class="mh-form-group">
+                                <label for="question-content" class="mh-label">Nội dung câu hỏi (10 – 500 ký tự)</label>
+                                <textarea id="question-content" name="content" class="mh-textarea" rows="3"
+                                          minlength="10" maxlength="500" required
+                                          placeholder="Đặt câu hỏi thảo luận về cốt truyện, nhân vật hoặc bối cảnh..."></textarea>
+                                <span class="mh-char-counter" id="question-counter">10 - 500 ký tự</span>
+                            </div>
+
+                            <div class="mh-form-actions">
+                                <button type="submit" class="mh-btn mh-btn-primary">Gửi câu hỏi</button>
+                            </div>
+                        </form>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="mh-review-box mh-guest-prompt">
+                        <p>Đăng nhập để đặt câu hỏi hoặc tham gia thảo luận cùng cộng đồng người xem.</p>
+                        <c:url var="qaLoginUrl" value="/login">
+                            <c:param name="returnTo" value="/movies/detail?id=${movie.id}#qa" />
+                        </c:url>
+                        <a href="${qaLoginUrl}" class="mh-btn mh-btn-primary mh-btn-sm">Đăng nhập để hỏi đáp</a>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+
+            <!-- User's Submitted Q&A (Personal Tracking) -->
+            <c:if test="${not empty myQaPageData and myQaPageData.hasItems}">
+                <div class="mh-qa-my-submissions">
+                    <h3 class="mh-form-subtitle">Nội dung bạn đã gửi</h3>
+                    <div class="mh-qa-my-list">
+                        <c:forEach var="item" items="${myQaPageData.items}">
+                            <div class="mh-qa-my-item">
+                                <div class="mh-qa-item-head">
+                                    <div class="mh-qa-tags">
+                                        <span class="mh-tag-type ${item.question ? 'is-q' : 'is-a'}"><c:out value="${item.typeLabel}" /></span>
+                                        <c:choose>
+                                            <c:when test="${item.status eq 'APPROVED'}">
+                                                <span class="mh-badge mh-badge-approved">Đã duyệt</span>
+                                            </c:when>
+                                            <c:when test="${item.status eq 'REJECTED'}">
+                                                <span class="mh-badge mh-badge-rejected">Bị từ chối</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span class="mh-badge mh-badge-pending">Chờ duyệt</span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <span class="mh-review-date"><c:out value="${item.formattedDate}" /></span>
+                                </div>
+                                <c:if test="${item.answer}">
+                                    <div class="mh-qa-parent-ref">
+                                        Trả lời cho: <em><c:out value="${item.questionTitle}" escapeXml="true" /></em>
+                                    </div>
+                                </c:if>
+                                <div class="mh-qa-body">
+                                    <p><c:out value="${item.content}" escapeXml="true" /></p>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+
+                    <!-- My QA Pagination -->
+                    <c:if test="${myQaPageData.totalPages > 1}">
+                        <nav class="mh-pagination" aria-label="Phân trang nội dung đã gửi">
+                            <c:if test="${myQaPageData.hasPrevious()}">
+                                <c:url var="prevMyUrl" value="/movies/detail">
+                                    <c:param name="id" value="${movie.id}" />
+                                    <c:param name="myQaPage" value="${myQaPageData.page - 1}" />
+                                </c:url>
+                                <a href="${prevMyUrl}#qa" class="mh-btn mh-btn-secondary mh-btn-sm">&laquo; Trước</a>
+                            </c:if>
+                            <span class="mh-pagination-info">Trang ${myQaPageData.page} / ${myQaPageData.totalPages}</span>
+                            <c:if test="${myQaPageData.hasNext()}">
+                                <c:url var="nextMyUrl" value="/movies/detail">
+                                    <c:param name="id" value="${movie.id}" />
+                                    <c:param name="myQaPage" value="${myQaPageData.page + 1}" />
+                                </c:url>
+                                <a href="${nextMyUrl}#qa" class="mh-btn mh-btn-secondary mh-btn-sm">Sau &raquo;</a>
+                            </c:if>
+                        </nav>
+                    </c:if>
+                </div>
+            </c:if>
+
+            <!-- Selected Question Thread (when questionId is active) -->
+            <c:if test="${not empty selectedQuestion}">
+                <div class="mh-qa-thread" id="qa-thread">
+                    <div class="mh-qa-thread-header">
+                        <c:url var="backAllUrl" value="/movies/detail">
+                            <c:param name="id" value="${movie.id}" />
+                        </c:url>
+                        <a href="${backAllUrl}#qa" class="mh-btn mh-btn-secondary mh-btn-sm">&larr; Xem tất cả câu hỏi</a>
+                        <span class="mh-qa-thread-status">Chi tiết thảo luận</span>
+                    </div>
+
+                    <!-- Question card -->
+                    <div class="mh-qa-thread-question">
+                        <div class="mh-qa-author-bar">
+                            <c:choose>
+                                <c:when test="${not empty selectedQuestion.authorAvatarUrl}">
+                                    <img src="<c:out value="${selectedQuestion.authorAvatarUrl}" escapeXml="true" />" alt="" class="mh-author-avatar">
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="mh-avatar-fallback"><c:out value="${fn:substring(selectedQuestion.authorName, 0, 1)}" /></div>
+                                </c:otherwise>
+                            </c:choose>
+                            <div>
+                                <strong class="mh-author-name"><c:out value="${selectedQuestion.authorName}" escapeXml="true" /></strong>
+                                <span class="mh-review-date"><c:out value="${selectedQuestion.formattedDate}" /></span>
+                            </div>
+                        </div>
+                        <h3 class="mh-qa-thread-title"><c:out value="${selectedQuestion.content}" escapeXml="true" /></h3>
+                    </div>
+
+                    <!-- Answers List -->
+                    <div class="mh-qa-thread-answers">
+                        <h4 class="mh-qa-answers-heading">Câu trả lời (<c:out value="${answersPage != null ? answersPage.totalCount : 0}" />)</h4>
+                        <c:choose>
+                            <c:when test="${empty answersPage or not answersPage.hasItems}">
+                                <div class="mh-empty-box">
+                                    <p class="mh-empty-text">Chưa có câu trả lời nào được duyệt cho câu hỏi này.</p>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="ans" items="${answersPage.items}">
+                                    <article class="mh-qa-answer-card">
+                                        <div class="mh-qa-author-bar">
+                                            <c:choose>
+                                                <c:when test="${not empty ans.authorAvatarUrl}">
+                                                    <img src="<c:out value="${ans.authorAvatarUrl}" escapeXml="true" />" alt="" class="mh-author-avatar">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div class="mh-avatar-fallback"><c:out value="${fn:substring(ans.authorName, 0, 1)}" /></div>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <div>
+                                                <strong class="mh-author-name"><c:out value="${ans.authorName}" escapeXml="true" /></strong>
+                                                <span class="mh-review-date"><c:out value="${ans.formattedDate}" /></span>
+                                            </div>
+                                        </div>
+                                        <div class="mh-qa-answer-body">
+                                            <p><c:out value="${ans.content}" escapeXml="true" /></p>
+                                        </div>
+                                    </article>
+                                </c:forEach>
+
+                                <!-- Answer Pagination -->
+                                <c:if test="${answersPage.totalPages > 1}">
+                                    <nav class="mh-pagination" aria-label="Phân trang câu trả lời">
+                                        <c:if test="${answersPage.hasPrevious()}">
+                                            <c:url var="prevAnsUrl" value="/movies/detail">
+                                                <c:param name="id" value="${movie.id}" />
+                                                <c:param name="questionId" value="${selectedQuestion.id}" />
+                                                <c:param name="answerPage" value="${answersPage.page - 1}" />
+                                            </c:url>
+                                            <a href="${prevAnsUrl}#qa-thread" class="mh-btn mh-btn-secondary mh-btn-sm">&laquo; Trước</a>
+                                        </c:if>
+                                        <span class="mh-pagination-info">Trang ${answersPage.page} / ${answersPage.totalPages}</span>
+                                        <c:if test="${answersPage.hasNext()}">
+                                            <c:url var="nextAnsUrl" value="/movies/detail">
+                                                <c:param name="id" value="${movie.id}" />
+                                                <c:param name="questionId" value="${selectedQuestion.id}" />
+                                                <c:param name="answerPage" value="${answersPage.page + 1}" />
+                                            </c:url>
+                                            <a href="${nextAnsUrl}#qa-thread" class="mh-btn mh-btn-secondary mh-btn-sm">Sau &raquo;</a>
+                                        </c:if>
+                                    </nav>
+                                </c:if>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+
+                    <!-- Reply Form (Authenticated) -->
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.userId}">
+                            <div class="mh-qa-reply-box">
+                                <h4 class="mh-form-subtitle">Trả lời câu hỏi này</h4>
+                                <form action="${ctx}/answers/create" method="POST" class="mh-qa-form">
+                                    <input type="hidden" name="csrfToken" value="<c:out value="${csrfToken}" escapeXml="true" />">
+                                    <input type="hidden" name="movieId" value="${movie.id}">
+                                    <input type="hidden" name="questionId" value="${selectedQuestion.id}">
+                                    <input type="hidden" name="submissionId" value="${answerNonce}">
+
+                                    <div class="mh-form-group">
+                                        <label for="answer-content" class="mh-label">Nội dung câu trả lời (1 – 1000 ký tự)</label>
+                                        <textarea id="answer-content" name="content" class="mh-textarea" rows="3"
+                                                  minlength="1" maxlength="1000" required
+                                                  placeholder="Chia sẻ câu trả lời của bạn..."></textarea>
+                                    </div>
+
+                                    <div class="mh-form-actions">
+                                        <button type="submit" class="mh-btn mh-btn-primary">Gửi câu trả lời</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="mh-guest-prompt-sm">
+                                <c:url var="ansLoginUrl" value="/login">
+                                    <c:param name="returnTo" value="/movies/detail?id=${movie.id}&questionId=${selectedQuestion.id}#qa-thread" />
+                                </c:url>
+                                <a href="${ansLoginUrl}" class="mh-link">Đăng nhập để trả lời câu hỏi này &rarr;</a>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </c:if>
+
+            <!-- Public Questions List -->
+            <div class="mh-qa-community-list">
+                <h3 class="mh-qa-list-title">Danh sách câu hỏi thảo luận</h3>
+                <c:choose>
+                    <c:when test="${empty questionsPage or not questionsPage.hasItems}">
+                        <div class="mh-empty-box">
+                            <p class="mh-empty-text">Chưa có câu hỏi nào về bộ phim này. Hãy là người đầu tiên đặt câu hỏi!</p>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="mh-qa-grid">
+                            <c:forEach var="q" items="${questionsPage.items}">
+                                <article class="mh-qa-card">
+                                    <div class="mh-qa-card-head">
+                                        <div class="mh-qa-author-bar">
+                                            <c:choose>
+                                                <c:when test="${not empty q.authorAvatarUrl}">
+                                                    <img src="<c:out value="${q.authorAvatarUrl}" escapeXml="true" />" alt="" class="mh-author-avatar">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div class="mh-avatar-fallback"><c:out value="${fn:substring(q.authorName, 0, 1)}" /></div>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <div>
+                                                <strong class="mh-author-name"><c:out value="${q.authorName}" escapeXml="true" /></strong>
+                                                <span class="mh-review-date"><c:out value="${q.formattedDate}" /></span>
+                                            </div>
+                                        </div>
+                                        <span class="mh-qa-answer-count-badge">${q.answerCount} câu trả lời</span>
+                                    </div>
+
+                                    <div class="mh-qa-card-body">
+                                        <p><c:out value="${q.content}" escapeXml="true" /></p>
+                                    </div>
+
+                                    <div class="mh-qa-card-actions">
+                                        <c:url var="threadUrl" value="/movies/detail">
+                                            <c:param name="id" value="${movie.id}" />
+                                            <c:param name="questionId" value="${q.id}" />
+                                        </c:url>
+                                        <a href="${threadUrl}#qa" class="mh-btn mh-btn-secondary mh-btn-sm">
+                                            Xem thảo luận (${q.answerCount}) &rarr;
+                                        </a>
+                                    </div>
+                                </article>
+                            </c:forEach>
+                        </div>
+
+                        <!-- Questions Pagination -->
+                        <c:if test="${questionsPage.totalPages > 1}">
+                            <nav class="mh-pagination" aria-label="Phân trang câu hỏi">
+                                <c:if test="${questionsPage.hasPrevious()}">
+                                    <c:url var="prevQUrl" value="/movies/detail">
+                                        <c:param name="id" value="${movie.id}" />
+                                        <c:param name="questionPage" value="${questionsPage.page - 1}" />
+                                    </c:url>
+                                    <a href="${prevQUrl}#qa" class="mh-btn mh-btn-secondary mh-btn-sm">&laquo; Trang trước</a>
+                                </c:if>
+
+                                <span class="mh-pagination-info">Trang ${questionsPage.page} / ${questionsPage.totalPages}</span>
+
+                                <c:if test="${questionsPage.hasNext()}">
+                                    <c:url var="nextQUrl" value="/movies/detail">
+                                        <c:param name="id" value="${movie.id}" />
+                                        <c:param name="questionPage" value="${questionsPage.page + 1}" />
+                                    </c:url>
+                                    <a href="${nextQUrl}#qa" class="mh-btn mh-btn-secondary mh-btn-sm">Trang sau &raquo;</a>
+                                </c:if>
+                            </nav>
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </section>
+
         <mh:movieRow sectionId="sec-similar" title="Phim tương tự" items="${similar}" />
     </main>
 

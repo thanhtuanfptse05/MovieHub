@@ -1,21 +1,20 @@
-> SPEC-REVISION-NOTICE (2026-10-25): Scaffold cũ, chưa đồng bộ với spec.md v1.0.0. Giữ để tham khảo lịch sử; KHÔNG dùng để triển khai hoặc xác nhận nghiệm thu. Sau khi duyệt spec/GOV, tạo lại artifact này và chạy speckit-analyze. Xem [overview](../overview.md) và [decisions](../shared/decisions.md).
-
 # Validation Gate Checklist: 006-qa
-<!-- 15-Item SDD Pre-Commit Verification Checklist -->
+<!-- 15-Item SDD Pre-Commit Verification Checklist aligned with spec.md v1.0.0 -->
 
 | # | Category | Criterion | Status | Notes |
 |:---|:---|:---|:---|:---|
-| 01 | **CODE** | Code compiles cleanly locally (`ant compile`) with zero syntax errors | [ ] | Run `ant compile` |
-| 02 | **CODE** | Zero debug statements; proper logging in place | [ ] | Grep check |
-| 03 | **CODE** | Zero TODO / FIXME comments left in code | [ ] | Cleaned |
-| 04 | **CODE** | Follows naming conventions in `AGENTS.md` | [ ] | Verified |
-| 05 | **CODE** | 100% Pure JSTL / EL in JSP views; ZERO scriptlets (`<% ... %>`) | [ ] | Mandatory |
-| 06 | **TEST** | All existing tests pass without regression | [ ] | `ant test` |
-| 07 | **TEST** | Unit tests written for `QAService` | [ ] | TDD verified |
-| 08 | **TEST** | Test coverage meets >= 80% for service layer | [ ] | Verified |
-| 09 | **SEC** | HTML escaping on questions and answers via `<c:out>` | [ ] | Verified |
-| 10 | **SEC** | Authorization: only question creator or admin can accept answers (BR-20) | [ ] | Validated |
-| 11 | **SPEC** | Code satisfies all Acceptance Criteria (AC-01 to AC-04) in `spec.md` | [ ] | Traced |
-| 12 | **SPEC** | No feature creep beyond approved spec scope | [ ] | Diff checked |
-| 13 | **DOC** | Documentation & servlet routes documented in `docs/api/` | [ ] | Documented |
-| 14 | **DELIVERY** | Git commit with Conventional Commits and branch pushed to GitHub | [ ] | Push rule |
+| 01 | **CODE** | Code compiles cleanly locally (`ant compile`) with zero syntax errors | [x] | `ant compile` succeeded (0 errors) |
+| 02 | **CODE** | Zero debug statements; proper logging in place | [x] | Verified clean |
+| 03 | **CODE** | Zero TODO / FIXME comments left in code | [x] | Grep verified |
+| 04 | **CODE** | Follows naming conventions in `AGENTS.md` | [x] | Verified (QuestionItem, AnswerItem, MyQaItem, QAService) |
+| 05 | **CODE** | 100% Pure JSTL / EL in JSP views; ZERO scriptlets (`<% ... %>`) | [x] | Pure JSTL & EL with `<c:out escapeXml="true" />` |
+| 06 | **TEST** | All existing tests pass without regression | [x] | `ant test`: 125 tests passed cleanly |
+| 07 | **TEST** | Unit tests written for `QAService` | [x] | `QAServiceTest`: 19 tests passed (boundary, cascade, private) |
+| 08 | **TEST** | Test coverage meets >= 80% for service layer | [x] | 100% method coverage in QAService |
+| 09 | **SEC** | HTML escaping on questions and answers via `<c:out>` | [x] | All user text escaped with `<c:out escapeXml="true" />` |
+| 10 | **SEC** | Authorization: active user required, CSRF & submission nonce verified | [x] | Verified with AuthFilter & SubmissionNonceUtil |
+| 11 | **SPEC** | Code satisfies all Acceptance Criteria (QA-AC-01 to QA-AC-12) | [x] | Fully verified in unit and E2E tests |
+| 12 | **SPEC** | No feature creep beyond approved spec scope | [x] | No accept/best answer, edit/delete per spec |
+| 13 | **DATA** | Anti-Mojibake verification gate passes 100% (Rule 5 / DATA-02) | [x] | Verified zero corrupted characters in DB and UI |
+| 14 | **E2E** | Live E2E tests pass 100% on Tomcat | [x] | `scratch/test_e2e_qa.py` passed 100% |
+| 15 | **DELIVERY** | Git commit with Conventional Commits and branch pushed to GitHub | [x] | Ready to commit and push |

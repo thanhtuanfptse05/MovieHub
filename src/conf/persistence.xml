@@ -9,6 +9,8 @@
         <class>com.moviehub.entity.Category</class>
         <class>com.moviehub.entity.Review</class>
         <class>com.moviehub.entity.Favorite</class>
+        <class>com.moviehub.entity.Question</class>
+        <class>com.moviehub.entity.Answer</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         
         <properties>

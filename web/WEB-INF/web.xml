@@ -179,6 +179,24 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>QuestionCreateServlet</servlet-name>
+        <servlet-class>com.moviehub.controller.qa.QuestionCreateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QuestionCreateServlet</servlet-name>
+        <url-pattern>/questions/create</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AnswerCreateServlet</servlet-name>
+        <servlet-class>com.moviehub.controller.qa.AnswerCreateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AnswerCreateServlet</servlet-name>
+        <url-pattern>/answers/create</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>ErrorServlet</servlet-name>
         <servlet-class>com.moviehub.controller.error.ErrorServlet</servlet-class>
     </servlet>
