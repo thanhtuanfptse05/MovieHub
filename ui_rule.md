@@ -99,6 +99,15 @@ Thông báo thành công, state “Đã lưu”, count mới và trạng thái d
 
 Định dạng số có thể rút gọn/thêm phân cách theo quy ước chung nhưng phải giữ nghĩa; không đổi thang1–5 thành1–10 hoặc gắn IMDb khi không có nguồn đó. Trạng thái metadata phải cùng movie/user với card, không copy chéo do fallback.
 
+### UI-DATA-08: toàn vẹn tiếng Việt và Unicode (Anti-Mojibake)
+
+Mọi dữ liệu nghiệp vụ tiếng Việt (tên phim, mô tả, thể loại, họ tên user, bình luận, câu hỏi) khi seed vào DB, lưu trữ hoặc render lên UI tuyệt đối không được có ký tự lỗi/mojibake (như `Káº»`, `ÄÃ¡nh`, `?`, mất dấu).
+- Khi seed/insert bằng Java: Bắt buộc compile file seeder với `javac -encoding UTF-8`.
+- Khi seed/insert bằng SQL: Bắt buộc dùng tiền tố Unicode `N'...'` (ví dụ `N'Hành Động'`) và cột `NVARCHAR`.
+- Khi dùng công cụ dòng lệnh: `sqlcmd` trên Windows phải có cờ `-f 65001` và `-I`; PowerShell phải set `[Console]::OutputEncoding = UTF8`.
+- Mọi JSP phải có `<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>` và `<meta charset="UTF-8">`.
+- Sau khi add dữ liệu, agent BẮT BUỘC query lại DB để kiểm chứng bằng mắt/script, quét các chuỗi rác mojibake trước khi coi như hoàn tất. Dữ liệu lỗi font là lỗi chặn bàn giao tương đương hardcode.
+
 ## 3. Copy sản phẩm và nội dung bị loại
 
 ### UI-COPY-02: phạm vi cấm bao gồm mọi bề mặt UI
@@ -194,7 +203,7 @@ Không ghi “data từ backend” chung chung: một list hardcode trong backen
 - [ ] UI-CHK-08: Nhãn/hint/error nói việc người dùng cần biết, không giải thích thuật toán/constraint.
 - [ ] UI-CHK-09: Không control ngoài scope hoặc nút/link không thực hiện tác vụ.
 - [ ] UI-CHK-10: Submit chỉ báo thành công sau commit và phản ánh state DB thật.
-- [ ] UI-CHK-11: Kiểm tra ảnh lỗi, media lỗi,0 rating, title/content dài và Unicode tiếng Việt.
+- [ ] UI-CHK-11: Kiểm tra ảnh lỗi, media lỗi, 0 rating, title/content dài; bảo đảm 100% tiếng Việt có dấu chuẩn, KHÔNG mojibake (áº, Ä, Ã, Â, â€, á», ?, rác font).
 - [ ] UI-CHK-12: Screenshot desktop/tablet/mobile, keyboard/focus và reduced motion được kiểm tra.
 - [ ] UI-CHK-13: Route/context path, JSP escaping, CSRF/role/ownership và không lộ secret được xác nhận.
 - [ ] UI-CHK-14: Browser console/network không có fallback mock, lỗi font/CDN hoặc placeholder copy sai nghĩa.
@@ -212,7 +221,7 @@ Không dùng regex tự xóa từ khóa để “làm sạch” UI vì có thể
 
 | Mức | Trường hợp | Xử lý |
 |---|---|---|
-| Chặn bàn giao | Business data hardcode/mock fallback; UI tài liệu nghiệp vụ; lộ private/secret; fake success | Sửa trước khi báo hoàn tất |
+| Chặn bàn giao | Business data hardcode/mock fallback; UI tài liệu nghiệp vụ; lỗi font/rác ký tự tiếng Việt (mojibake); lộ private/secret; fake success | Sửa trước khi báo hoàn tất |
 | Chặn visual acceptance | Sai token/layout; overflow; keyboard không dùng được; media/control giả | Sửa và chụp lại bằng chứng |
 | Cần ghi rõ | DB/backend chưa có, font/asset chưa cung cấp, scenario chưa chạy | Báo trạng thái thật; không thay bằng dữ liệu/claim giả |
 

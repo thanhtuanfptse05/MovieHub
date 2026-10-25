@@ -43,6 +43,15 @@ Lưu timestamp UTC, hiển thị Asia/Ho_Chi_Minh. Dùng giờ server cho sessio
 
 Trim text trừ password; normalize NFC cho tên/nội dung. Giới hạn nghiệp vụ đếm Unicode code point; đồng thời không vượt sức chứa cột SQL Server (NVARCHAR(n) có giới hạn n đơn vị UTF-16). Password không trim/normalize. Email trim và lowercase độc lập locale; không xóa dấu chấm hoặc +tag.
 
+**Toàn vẹn tiếng Việt & Anti-Mojibake (DATA-02 / R-04)**:
+- Mọi file nguồn `.java`, `.jsp`, `.sql`, `.json`, `.properties` phải lưu với bảng mã UTF-8.
+- Compile file Java (seeder, tool): Bắt buộc thêm cờ `-encoding UTF-8` (ví dụ `javac -encoding UTF-8 ...`). Không để Windows fallback về CP1252/ANSI.
+- Chuỗi SQL chứa tiếng Việt: Bắt buộc dùng tiền tố `N'...'` (như `N'Kẻ Đánh Cắp Giấc Mơ'`). Cột DB bắt buộc là `NVARCHAR`.
+- Công cụ `sqlcmd` trên Windows: Luôn kèm cờ `-f 65001` (UTF-8) và `-I` (QUOTED_IDENTIFIER ON).
+- PowerShell/terminal: Thiết lập `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8` và xuất file với `-Encoding UTF8`.
+- Web tier: Request/Response dùng `CharacterEncodingFilter` UTF-8; JSP khai báo pageEncoding="UTF-8" và `<meta charset="UTF-8">`.
+- Cổng kiểm chứng (Verification Gate): Sau khi thêm/sửa dữ liệu vào DB, bắt buộc SELECT kiểm tra output. Nếu xuất hiện ký tự rác (`áº`, `Ä`, `Ã`, `Â`, `â€`, `á»`, `Æ`, `?`), cấm đóng task cho đến khi sửa dứt điểm nguồn sinh lỗi.
+
 Danh sách public/admin 10 mục/trang, bắt đầu 1; không nhận pageSize. page thiếu, không nguyên, <1 hoặc tràn số → 1. Page vượt trang cuối → trang cuối; tập rỗng → page=1, totalPages=0, không link trước/sau. Luôn có khóa phụ id để thứ tự xác định. Count và dữ liệu phải dùng cùng điều kiện hiển thị.
 
 ## 5. HTTP và lỗi (SYS-04)

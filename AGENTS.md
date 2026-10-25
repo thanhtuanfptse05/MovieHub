@@ -7,6 +7,7 @@ Version: 2.1.0 | Ratified: 2026-10-25 | Project: MovieHub (PRJ301 Java Ant Web A
 - MUST read [ui_rule.md](ui_rule.md), [design.md](design.md), and the current module spec before creating, editing, reviewing or testing any UI. The supplied HTML is a visual reference only; its sample content and developer annotations are not runtime requirements.
 - **R-02 / UI-DATA-01: NO HARDCODED BUSINESS DATA.** All movie/user/category/favorite/review/Q&A/media metadata/count/rating/KPI data MUST come from SQL Server through JPA → Service → DTO → Servlet → JSP. Do not move fixed arrays into Java services, static JSON, localStorage or mock endpoints to evade this rule. Missing/failed DB data MUST render honest empty/error states; seed demo data into the DB rather than into UI code.
 - **R-03 / UI-COPY-01: NO BUSINESS-RULE DOCUMENTATION IN PRODUCT UI.** Never render Business Rules/BusinessRule panels, BR/FR/UC/NFR references, schema/SQL/JPA/transaction explanations, stack badges or developer/agent notes on public OR admin pages, including tooltips and accessibility text. Keep these in docs. Short task labels, input guidance, real statuses and understandable errors remain valid product copy.
+- **R-04 / DATA-02 / ANTI-MOJIBAKE: ZERO CHỮ LỖI TIẾNG VIỆT & UNICODE.** Mọi thao tác seed data, thêm/sửa bản ghi DB, viết script Java/SQL/PowerShell, render JSP/Servlet tuyệt đối KHÔNG được để xảy ra lỗi font/vỡ ký tự/mojibake tiếng Việt (như `Káº»`, `ÄÃ¡nh`, `?`, mất dấu). Sau bất kỳ thao tác nạp dữ liệu hay hiển thị nào, agent BẮT BUỘC phải thực hiện bước kiểm chứng (Verification Gate) đọc lại dữ liệu từ DB / giao diện để quét ký tự rác trước khi báo hoàn thành.
 - Static UI labels, brand assets, neutral placeholders, CSS tokens and domain-option labels are allowed within UI-DATA-03; they MUST NOT contain fabricated entity records or statistics. Browser media state may come from the actual video element, never from a simulated timeline.
 - Existing feature specs govern scope. Do not copy unsupported 4K/Dolby claims, weekly trends, director/cast data, notification/like/accepted-answer/audit-log controls or dead links from the mockup.
 - Before UI handoff, demonstrate DB-to-screen data lineage and a DB fixture change reflected without editing UI source; check empty/error states and absence of generated engineering copy. UI-DATA-01/UI-COPY-01 violations block completion even if the page looks finished. Follow the full checklist in ui_rule.md.
@@ -57,6 +58,25 @@ The application MUST strictly run with only the 4 JAR libraries located in [`all
 - **Password Hashing**: User passwords MUST be hashed using BCrypt (cost >= 12). Plaintext passwords SHALL NEVER be stored, printed to console, or passed in URLs.
 - **Session Security**: Session ID must be regenerated on login (`session.invalidate()` -> `request.getSession(true)`).
 - **Admin Isolation**: All `/admin/*` routes must be guarded by `AdminAuthFilter` or role checks.
+
+### Rule 5: Vietnamese & Unicode Data Integrity Guardrails (Anti-Mojibake Policy)
+All database data, source files, SQL scripts, compilation steps, and web responses MUST preserve 100% Vietnamese diacritics and Unicode characters. Character corruption (mojibake) is a Layer 1 hard failure.
+1. **Compilation Encoding**: Any standalone compilation of Java classes/seeders MUST explicitly specify `-encoding UTF-8` (e.g. `javac -encoding UTF-8 ...`). Never rely on Windows default ANSI/CP1252 codepage.
+2. **SQL Server Unicode Literals (`N'...'`) & Data Types**:
+   - ALL SQL statements containing Vietnamese characters (in `.sql` scripts or JDBC queries) MUST use the `N` prefix for Unicode string literals: `N'Inception: Kẻ Đánh Cắp Giấc Mơ'`.
+   - All text columns storing Vietnamese text MUST be `NVARCHAR` or `NVARCHAR(MAX)` (never plain `VARCHAR`).
+3. **Database Client Flags (`sqlcmd`)**:
+   - On Windows, `sqlcmd` MUST always be invoked with `-f 65001` (UTF-8 code page) and `-I` (QUOTED_IDENTIFIER ON):
+     `sqlcmd -I -S <server> -U <user> -P <pass> -d MovieHub -C -f 65001 ...`
+4. **PowerShell & Terminal Encoding**:
+   - Any PowerShell script creating files or reading console output MUST set `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8` and write files with `-Encoding UTF8`.
+5. **Web Tier Request/Response Encoding**:
+   - All requests MUST be filtered through `CharacterEncodingFilter` with UTF-8 before reading form parameters (`request.getParameter(...)`).
+   - Servlets rendering views/responses MUST set `response.setCharacterEncoding("UTF-8")` and `response.setContentType("text/html; charset=UTF-8")`.
+   - All JSP views MUST begin with `<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>` and contain `<meta charset="UTF-8">`.
+6. **Mandatory Post-Seed/Mutation Verification Gate**:
+   - After executing ANY data seeding, database script, or entity mutation, the agent MUST run a verification query (e.g. `SELECT`) and inspect the output.
+   - If ANY mojibake artifact is detected (e.g., `áº`, `Ä`, `Ã`, `Â`, `â€`, `á»`, `Æ`, `?`), the task is BLOCKED until the encoding is corrected at the source and the database contains pure, clean Vietnamese diacritics.
 
 ---
 
