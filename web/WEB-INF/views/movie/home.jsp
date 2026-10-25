@@ -10,7 +10,7 @@
     <meta name="description" content="MovieHub - khám phá phim mới cập nhật, xem nhiều và được đánh giá cao.">
     <title>MovieHub - Khám phá phim</title>
     <link rel="stylesheet" href="${ctx}/assets/css/style.css">
-    <script src="${ctx}/assets/js/catalog.js" defer></script>
+    <script src="${ctx}/assets/js/catalog.js" charset="UTF-8" defer></script>
 </head>
 <body>
     <mh:header active="home" />

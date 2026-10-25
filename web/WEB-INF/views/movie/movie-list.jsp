@@ -10,7 +10,7 @@
     <meta name="description" content="Tìm kiếm và lọc phim theo tên, thể loại, năm phát hành.">
     <title>Danh sách phim | MovieHub</title>
     <link rel="stylesheet" href="${ctx}/assets/css/style.css">
-    <script src="${ctx}/assets/js/catalog.js" defer></script>
+    <script src="${ctx}/assets/js/catalog.js" charset="UTF-8" defer></script>
 </head>
 <body>
     <mh:header active="movies" />

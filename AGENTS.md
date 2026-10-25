@@ -60,7 +60,7 @@ The application MUST strictly run with only the 4 JAR libraries located in [`all
 - **Admin Isolation**: All `/admin/*` routes must be guarded by `AdminAuthFilter` or role checks.
 
 ### Rule 5: Vietnamese & Unicode Data Integrity Guardrails (Anti-Mojibake Policy)
-All database data, source files, SQL scripts, compilation steps, and web responses MUST preserve 100% Vietnamese diacritics and Unicode characters. Character corruption (mojibake) is a Layer 1 hard failure.
+All database data, source files, SQL scripts, compilation steps, web responses, and frontend client assets MUST preserve 100% Vietnamese diacritics and Unicode characters. Character corruption (mojibake) is a Layer 1 hard failure.
 1. **Compilation Encoding**: Any standalone compilation of Java classes/seeders MUST explicitly specify `-encoding UTF-8` (e.g. `javac -encoding UTF-8 ...`). Never rely on Windows default ANSI/CP1252 codepage.
 2. **SQL Server Unicode Literals (`N'...'`) & Data Types**:
    - ALL SQL statements containing Vietnamese characters (in `.sql` scripts or JDBC queries) MUST use the `N` prefix for Unicode string literals: `N'Inception: Kẻ Đánh Cắp Giấc Mơ'`.
@@ -71,12 +71,17 @@ All database data, source files, SQL scripts, compilation steps, and web respons
 4. **PowerShell & Terminal Encoding**:
    - Any PowerShell script creating files or reading console output MUST set `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8` and write files with `-Encoding UTF8`.
 5. **Web Tier Request/Response Encoding**:
-   - All requests MUST be filtered through `CharacterEncodingFilter` with UTF-8 before reading form parameters (`request.getParameter(...)`).
+   - Dynamic requests MUST be filtered through `CharacterEncodingFilter` with UTF-8 before reading form parameters (`request.getParameter(...)`).
    - Servlets rendering views/responses MUST set `response.setCharacterEncoding("UTF-8")` and `response.setContentType("text/html; charset=UTF-8")`.
    - All JSP views MUST begin with `<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>` and contain `<meta charset="UTF-8">`.
-6. **Mandatory Post-Seed/Mutation Verification Gate**:
-   - After executing ANY data seeding, database script, or entity mutation, the agent MUST run a verification query (e.g. `SELECT`) and inspect the output.
-   - If ANY mojibake artifact is detected (e.g., `áº`, `Ä`, `Ã`, `Â`, `â€`, `á»`, `Æ`, `?`), the task is BLOCKED until the encoding is corrected at the source and the database contains pure, clean Vietnamese diacritics.
+6. **Frontend Static Assets & JavaScript Guardrails (ZERO Client-Side Mojibake)**:
+   - `CharacterEncodingFilter` MUST EXCLUDE static assets (`/assets/*`, `*.js`, `*.css`, images, fonts). Setting `response.setCharacterEncoding()` on static assets forces Tomcat's `DefaultServlet` into character transcoding using Windows server's default `Cp1252` encoding, producing double-encoded mojibake (e.g. `Không` -> `KhÃ´ng`). Static assets must be streamed as raw binary bytes.
+   - All script tags in JSP MUST specify `charset="UTF-8"`: `<script src="..." charset="UTF-8" defer></script>`.
+   - JavaScript files (`.js`) MUST NEVER contain raw hardcoded Vietnamese string literals if they can be delivered via HTML5 `data-*` attributes from JSP (e.g. `data-error-notice="..."`). If JavaScript constants with Vietnamese characters are required, they MUST be encoded as Unicode escape sequences (e.g. `\u004b\u0068\u00f4\u006e\u0067 ...`) to eliminate all server/browser codepage guessing.
+7. **Mandatory Post-Seed/Mutation & HTTP Asset Verification Gate**:
+   - After executing ANY data seeding, database script, entity mutation, or frontend asset edit, the agent MUST run a verification query on DB AND fetch served HTTP assets (`.html`, `.js`).
+   - The agent MUST scan for double-encoded mojibake patterns (such as `áº`, `Ä`, `Ã`, `Â`, `â€`, `á»`, `Æ`, `Káº`, `ÄÃ¡nh`, `\ufffd`, `??`).
+   - Detection of ANY corrupted characters BLOCKS task completion until resolved.
 
 ---
 

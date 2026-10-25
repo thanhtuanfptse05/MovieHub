@@ -11,7 +11,7 @@
     <meta name="description" content="Danh sách phim yêu thích cá nhân trên MovieHub">
     <title>Phim yêu thích | MovieHub</title>
     <link rel="stylesheet" href="${ctx}/assets/css/style.css">
-    <script src="${ctx}/assets/js/catalog.js" defer></script>
+    <script src="${ctx}/assets/js/catalog.js" charset="UTF-8" defer></script>
 </head>
 <body>
     <mh:header active="favorites" />

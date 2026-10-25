@@ -12,7 +12,7 @@
     <meta name="description" content="Thông tin phim <c:out value="${movie.title}" escapeXml="true" />">
     <title><c:out value="${movie.title}" escapeXml="true" /> | MovieHub</title>
     <link rel="stylesheet" href="${ctx}/assets/css/style.css">
-    <script src="${ctx}/assets/js/catalog.js" defer></script>
+    <script src="${ctx}/assets/js/catalog.js" charset="UTF-8" defer></script>
 </head>
 <body>
     <mh:header active="movies" />
@@ -31,7 +31,9 @@
                         <video id="mh-player" class="mh-player" controls preload="metadata" playsinline
                                poster="<c:out value="${movie.posterUrl}" escapeXml="true" />"
                                src="<c:out value="${movie.primaryMediaUrl}" escapeXml="true" />"
-                               data-fallback="<c:out value="${movie.fallbackMediaUrl}" escapeXml="true" />">
+                               data-fallback="<c:out value="${movie.fallbackMediaUrl}" escapeXml="true" />"
+                               data-error-notice="Không phát được video chính. Bạn có thể chuyển sang trailer."
+                               data-error-fallback="Không phát được video này trên trình duyệt của bạn.">
                             Trình duyệt của bạn không hỗ trợ phát video.
                         </video>
                         <div class="mh-player-bar">

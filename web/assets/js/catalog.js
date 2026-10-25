@@ -20,6 +20,10 @@
   var fallbackUrl = player.dataset.fallback || '';
   var usedFallback = false;
 
+  // Unicode escape fallbacks guarantee zero mojibake regardless of server or browser encoding
+  var DEFAULT_NOTICE = '\u004b\u0068\u00f4\u006e\u0067\u0020\u0070\u0068\u00e1\u0074\u0020\u0111\u01b0\u1ee3\u0063\u0020\u0076\u0069\u0064\u0065\u006f\u0020\u0063\u0068\u00ed\u006e\u0068\u002e\u0020\u0042\u1ea1\u006e\u0020\u0063\u00f3\u0020\u0074\u0068\u1ec3\u0020\u0063\u0068\u0075\u0079\u1ec3\u006e\u0020\u0073\u0061\u006e\u0067\u0020\u0074\u0072\u0061\u0069\u006c\u0065\u0072\u002e';
+  var DEFAULT_FALLBACK_NOTICE = '\u004b\u0068\u00f4\u006e\u0067\u0020\u0070\u0068\u00e1\u0074\u0020\u0111\u01b0\u1ee3\u0063\u0020\u0076\u0069\u0064\u0065\u006f\u0020\u006e\u00e0\u0079\u0020\u0074\u0072\u00ea\u006e\u0020\u0074\u0072\u00ec\u006e\u0068\u0020\u0064\u0075\u0079\u1ec7\u0074\u0020\u0063\u1ee7\u0061\u0020\u0062\u1ea1\u006e\u002e';
+
   function showNotice(message) {
     if (notice) {
       notice.textContent = message;
@@ -32,9 +36,9 @@
       if (switchBtn) {
         switchBtn.hidden = false;
       }
-      showNotice('Không phát được video chính. Bạn có thể chuyển sang trailer.');
+      showNotice(player.dataset.errorNotice || DEFAULT_NOTICE);
     } else {
-      showNotice('Không phát được video này trên trình duyệt của bạn.');
+      showNotice(player.dataset.errorFallback || DEFAULT_FALLBACK_NOTICE);
     }
   });
 
