@@ -13,6 +13,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * JPA Entity representing a User in the MovieHub platform.
@@ -199,5 +202,26 @@ public class User implements Serializable {
 
     public boolean isAdmin() {
         return ROLE_ADMIN.equalsIgnoreCase(this.role);
+    }
+
+    public Date getCreatedAtDate() {
+        return createdAt != null ? Date.from(createdAt) : null;
+    }
+
+    public String getFormattedCreatedAt() {
+        if (createdAt == null) {
+            return "";
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+                .withZone(ZoneId.of("Asia/Ho_Chi_Minh"));
+        return formatter.format(createdAt);
+    }
+
+    public String getAvatarInitial() {
+        if (fullName == null || fullName.trim().isEmpty()) {
+            return "U";
+        }
+        String trimmed = fullName.trim();
+        return trimmed.substring(0, 1).toUpperCase();
     }
 }

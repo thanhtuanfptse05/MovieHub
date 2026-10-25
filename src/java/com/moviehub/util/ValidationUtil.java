@@ -118,4 +118,52 @@ public final class ValidationUtil {
         }
         return Normalizer.normalize(fullName.trim(), Normalizer.Form.NFC);
     }
+
+    /**
+     * Validates avatar URL:
+     * - Optional (null or empty is valid; will be stored as null)
+     * - Maximum 500 characters
+     * - Must be absolute HTTPS (or HTTP localhost/127.0.0.1 for local dev)
+     * - No userinfo, control characters, javascript:, data:, file:
+     */
+    public static boolean isValidAvatarUrl(String url) {
+        if (url == null || url.trim().isEmpty()) {
+            return true;
+        }
+        String trimmed = url.trim();
+        if (trimmed.length() > 500) {
+            return false;
+        }
+        try {
+            java.net.URI uri = new java.net.URI(trimmed);
+            if (!uri.isAbsolute()) {
+                return false;
+            }
+            String scheme = uri.getScheme();
+            if (scheme == null) {
+                return false;
+            }
+            scheme = scheme.toLowerCase();
+            if ("https".equals(scheme)) {
+                return uri.getUserInfo() == null;
+            } else if ("http".equals(scheme)) {
+                String host = uri.getHost();
+                return ("localhost".equalsIgnoreCase(host) || "127.0.0.1".equals(host)) && uri.getUserInfo() == null;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    /**
+     * Normalizes avatar URL: returns null if empty/whitespace, otherwise trimmed.
+     */
+    public static String normalizeAvatarUrl(String url) {
+        if (url == null || url.trim().isEmpty()) {
+            return null;
+        }
+        return url.trim();
+    }
 }

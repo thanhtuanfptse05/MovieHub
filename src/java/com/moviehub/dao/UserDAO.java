@@ -130,4 +130,48 @@ public class UserDAO {
             em.close();
         }
     }
+
+    /**
+     * Atomically updates user profile (fullName and avatarUrl) with optimistic locking on version.
+     * Guarantees that only one concurrent profile update with expectedVersion succeeds (PROFILE-AC-08).
+     *
+     * @param userId user id
+     * @param fullName full name (1-100 characters)
+     * @param avatarUrl avatar URL (or null if empty)
+     * @param expectedVersion entity version expected at form load
+     * @return true if updated successfully, false if version or status mismatched (conflict)
+     */
+    public boolean updateProfile(Long userId, String fullName, String avatarUrl, int expectedVersion) {
+        if (userId == null || fullName == null) {
+            return false;
+        }
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            int updatedRows = em.createQuery(
+                "UPDATE User u SET u.fullName = :fullName, u.avatarUrl = :avatarUrl, " +
+                "u.version = u.version + 1, u.updatedAt = :now " +
+                "WHERE u.id = :id AND u.version = :expectedVersion AND u.status = :status"
+            )
+            .setParameter("fullName", fullName)
+            .setParameter("avatarUrl", avatarUrl)
+            .setParameter("now", Instant.now())
+            .setParameter("id", userId)
+            .setParameter("expectedVersion", expectedVersion)
+            .setParameter("status", User.STATUS_ACTIVE)
+            .executeUpdate();
+
+            tx.commit();
+            return updatedRows == 1;
+        } catch (Exception ex) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            LOGGER.log(Level.SEVERE, "Failed atomic profile update for user ID " + userId + ": " + ex.getMessage(), ex);
+            throw new RuntimeException("Error executing atomic profile update", ex);
+        } finally {
+            em.close();
+        }
+    }
 }
