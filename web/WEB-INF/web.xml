@@ -134,6 +134,33 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>FavoriteListServlet</servlet-name>
+        <servlet-class>com.moviehub.controller.favorite.FavoriteListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FavoriteListServlet</servlet-name>
+        <url-pattern>/favorites</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FavoriteAddServlet</servlet-name>
+        <servlet-class>com.moviehub.controller.favorite.FavoriteAddServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FavoriteAddServlet</servlet-name>
+        <url-pattern>/favorites/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FavoriteRemoveServlet</servlet-name>
+        <servlet-class>com.moviehub.controller.favorite.FavoriteRemoveServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FavoriteRemoveServlet</servlet-name>
+        <url-pattern>/favorites/remove</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>ErrorServlet</servlet-name>
         <servlet-class>com.moviehub.controller.error.ErrorServlet</servlet-class>
     </servlet>

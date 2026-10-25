@@ -25,10 +25,12 @@ public class MovieDetailServlet extends HttpServlet {
     private static final Object VIEWS_INIT_LOCK = new Object();
 
     private MovieService movieService;
+    private com.moviehub.service.FavoriteService favoriteService;
 
     @Override
     public void init() throws ServletException {
         this.movieService = new MovieService();
+        this.favoriteService = new com.moviehub.service.FavoriteService();
     }
 
     @Override
@@ -54,7 +56,20 @@ public class MovieDetailServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
+
+            HttpSession session = request.getSession(false);
+            Long userId = (session != null) ? (Long) session.getAttribute("userId") : null;
+            boolean isFavorited = false;
+            if (userId != null) {
+                try {
+                    isFavorited = favoriteService.isFavorited(userId, id);
+                } catch (RuntimeException ex) {
+                    LOGGER.log(Level.WARNING, "Favorite check failed for user " + userId + ", movie " + id + ": " + ex.getMessage());
+                }
+            }
+
             request.setAttribute("movie", detail);
+            request.setAttribute("isFavorited", isFavorited);
             request.setAttribute("similar", movieService.getSimilar(id));
             request.getRequestDispatcher("/WEB-INF/views/movie/movie-detail.jsp").forward(request, response);
         } catch (RuntimeException ex) {

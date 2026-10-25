@@ -534,6 +534,14 @@ select.mh-input { appearance: auto; padding: 0 12px; }
 .mh-subtitle { font-size: 1.05rem; margin-bottom: 8px; }
 .mh-description { color: var(--mh-text); opacity: 0.92; white-space: pre-line; }
 
+/* Favorites */
+.mh-detail-actions { margin-bottom: 22px; display: flex; align-items: center; gap: 12px; }
+.mh-btn-favorite { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.mh-btn-favorite.is-active { background: #4a1217; color: var(--mh-accent); border-color: var(--mh-accent); }
+.mh-btn-favorite.is-active:hover { background: #5b000e; color: #fff; }
+.mh-card-actions { padding: 0 14px 14px; margin-top: auto; }
+.mh-card-actions .mh-btn { width: 100%; font-size: 0.82rem; }
+
 @media (max-width: 1024px) {
   .mh-filter { grid-template-columns: 1fr 1fr; }
   .mh-filter-q { grid-column: 1 / -1; }

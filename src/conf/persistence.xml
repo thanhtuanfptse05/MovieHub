@@ -8,6 +8,7 @@
         <class>com.moviehub.entity.Movie</class>
         <class>com.moviehub.entity.Category</class>
         <class>com.moviehub.entity.Review</class>
+        <class>com.moviehub.entity.Favorite</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         
         <properties>

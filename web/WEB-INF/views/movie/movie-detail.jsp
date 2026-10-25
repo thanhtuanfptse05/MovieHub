@@ -78,6 +78,42 @@
                     </c:choose>
                 </div>
 
+                <div class="mh-detail-actions">
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.userId}">
+                            <c:choose>
+                                <c:when test="${isFavorited}">
+                                    <form action="${ctx}/favorites/remove" method="POST" class="mh-inline-form">
+                                        <input type="hidden" name="csrfToken" value="<c:out value="${csrfToken}" escapeXml="true" />">
+                                        <input type="hidden" name="movieId" value="${movie.id}">
+                                        <input type="hidden" name="returnTo" value="/movies/detail?id=${movie.id}">
+                                        <button type="submit" class="mh-btn mh-btn-secondary mh-btn-favorite is-active" title="Bỏ khỏi danh sách yêu thích">
+                                            ♥ Đã yêu thích
+                                        </button>
+                                    </form>
+                                </c:when>
+                                <c:otherwise>
+                                    <form action="${ctx}/favorites/add" method="POST" class="mh-inline-form">
+                                        <input type="hidden" name="csrfToken" value="<c:out value="${csrfToken}" escapeXml="true" />">
+                                        <input type="hidden" name="movieId" value="${movie.id}">
+                                        <button type="submit" class="mh-btn mh-btn-primary mh-btn-favorite" title="Thêm vào danh sách yêu thích">
+                                            ♡ Yêu thích
+                                        </button>
+                                    </form>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:when>
+                        <c:otherwise>
+                            <c:url var="favLoginUrl" value="/login">
+                                <c:param name="returnTo" value="/movies/detail?id=${movie.id}" />
+                            </c:url>
+                            <a href="${favLoginUrl}" class="mh-btn mh-btn-secondary mh-btn-favorite" title="Đăng nhập để thêm vào yêu thích">
+                                ♡ Yêu thích
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+
                 <c:if test="${not empty movie.categories}">
                     <ul class="mh-chips" aria-label="Thể loại">
                         <c:forEach var="cat" items="${movie.categories}">

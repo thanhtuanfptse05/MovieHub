@@ -9,6 +9,7 @@
         <a href="${ctx}/movies" class="mh-nav-link${active == 'movies' ? ' is-active' : ''}">Phim</a>
         <c:choose>
             <c:when test="${not empty sessionScope.userId}">
+                <a href="${ctx}/favorites" class="mh-nav-link${active == 'favorites' ? ' is-active' : ''}">Yêu thích</a>
                 <a href="${ctx}/profile" class="mh-nav-link${active == 'profile' ? ' is-active' : ''}">
                     <c:out value="${sessionScope.userName}" escapeXml="true" />
                 </a>

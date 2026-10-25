@@ -188,6 +188,19 @@ public class MovieDAO {
         }
     }
 
+    /** Movie entity by id, or null if not found. */
+    public Movie findById(Long id) {
+        if (id == null) {
+            return null;
+        }
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.find(Movie.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
     /** Public movie entity or null. */
     public Movie findPublishedById(Long id) {
         if (id == null) {
