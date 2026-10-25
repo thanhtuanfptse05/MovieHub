@@ -1,3 +1,5 @@
+> SPEC-REVISION-NOTICE (2026-10-25): Nội dung scaffold bên dưới có mã BR và nghiệp vụ mâu thuẫn kế hoạch nguồn/spec v1.0.0. CHƯA tự động đổi hiệu lực constitution. Trước code phải chốt GOV-02 tại [decisions](../../specs/shared/decisions.md); baseline dự thảo ở [overview](../../specs/overview.md). Không trộn hai bộ BR để triển khai.
+
 # Business Rules & Domain Constraints — MovieHub
 <!-- SDD Constraint Layer 2: Business Logic & Policies -->
 
@@ -5,7 +7,7 @@
 - **BR-01**: Email must be globally unique across all user accounts.
 - **BR-02**: Passwords must be at least 8 characters long, containing at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.
 - **BR-03**: Failed login attempts exceeding 5 consecutive times will temporarily lock the account for 15 minutes.
-- **BR-04**: Password reset tokens expire after 15 minutes and can only be used once.
+- **BR-04 (legacy numbering, revised R-01)**: A registered ACTIVE email allows immediate password reset without email verification, OTP or reset tokens. Target is held in server session context; the account is not recreated or activated. See current auth spec v1.1.0; original plan BR-17 is superseded by R-01.
 - **BR-05**: Account status can be `ACTIVE`, `INACTIVE`, or `BANNED`. Only `ACTIVE` users can log in, post reviews, and ask questions.
 
 ## 2. Movie & Catalog Rules

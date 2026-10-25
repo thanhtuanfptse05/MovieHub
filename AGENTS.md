@@ -1,6 +1,15 @@
 # MovieHub — AI Agent Guidelines & Engineering Constitution
 <!-- Follows Spec-Driven Development (SDD) & Agent-Driven Development (ADD) Playbook -->
-Version: 1.0.0 | Ratified: 2026-10-25 | Project: MovieHub (PRJ301 Java Ant Web Application)
+Version: 2.1.0 | Ratified: 2026-10-25 | Project: MovieHub (PRJ301 Java Ant Web Application)
+
+## 0. Persistent UI Instructions — Read Before Every UI Task
+
+- MUST read [ui_rule.md](ui_rule.md), [design.md](design.md), and the current module spec before creating, editing, reviewing or testing any UI. The supplied HTML is a visual reference only; its sample content and developer annotations are not runtime requirements.
+- **R-02 / UI-DATA-01: NO HARDCODED BUSINESS DATA.** All movie/user/category/favorite/review/Q&A/media metadata/count/rating/KPI data MUST come from SQL Server through JPA → Service → DTO → Servlet → JSP. Do not move fixed arrays into Java services, static JSON, localStorage or mock endpoints to evade this rule. Missing/failed DB data MUST render honest empty/error states; seed demo data into the DB rather than into UI code.
+- **R-03 / UI-COPY-01: NO BUSINESS-RULE DOCUMENTATION IN PRODUCT UI.** Never render Business Rules/BusinessRule panels, BR/FR/UC/NFR references, schema/SQL/JPA/transaction explanations, stack badges or developer/agent notes on public OR admin pages, including tooltips and accessibility text. Keep these in docs. Short task labels, input guidance, real statuses and understandable errors remain valid product copy.
+- Static UI labels, brand assets, neutral placeholders, CSS tokens and domain-option labels are allowed within UI-DATA-03; they MUST NOT contain fabricated entity records or statistics. Browser media state may come from the actual video element, never from a simulated timeline.
+- Existing feature specs govern scope. Do not copy unsupported 4K/Dolby claims, weekly trends, director/cast data, notification/like/accepted-answer/audit-log controls or dead links from the mockup.
+- Before UI handoff, demonstrate DB-to-screen data lineage and a DB fixture change reflected without editing UI source; check empty/error states and absence of generated engineering copy. UI-DATA-01/UI-COPY-01 violations block completion even if the page looks finished. Follow the full checklist in ui_rule.md.
 
 ---
 

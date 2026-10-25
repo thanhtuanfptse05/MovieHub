@@ -1,6 +1,10 @@
 # Global Technical Constraints — MovieHub
 <!-- SDD Constraint Layer 1: Technology & Engineering Standards -->
 
+## Mandatory UI Baseline (Owner Decisions R-02/R-03, 2026-10-25)
+
+Read [ui_rule.md](../../ui_rule.md) and [design.md](../../design.md) before UI work. Business data MUST be queried from the database through JPA/Service/DTO; hardcoded business rows, static mock payloads and fake fallback data in any UI-serving layer are prohibited. Product UI MUST NOT render Business Rules, BR/FR/UC references or developer/stack/SQL explanations, including admin screens and tooltips. User task labels/status/error guidance are allowed as defined in ui_rule.md. These explicit owner rules override conflicting mockup text, examples and generic design-skill suggestions.
+
 ## 1. Technology Stack (Immutable)
 - **Runtime & Language**: Java SE 17 (LTS).
 - **Application Server**: Apache Tomcat 10.1 (Jakarta EE 10 Web Profile).

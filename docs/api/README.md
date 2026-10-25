@@ -1,6 +1,8 @@
 # MovieHub — Servlet & API Routes Specification
 <!-- Endpoint & Route Inventory -->
 
+> API scaffold: đối chiếu spec module hiện hành trước code. Riêng UC-03 đã cập nhật theo [auth v1.1.0/R-01](../../specs/001-auth/spec.md): email ACTIVE khớp được đặt password mới trực tiếp, không xác thực email/token/OTP/SMTP. Những route scaffold khác chưa đồng bộ toàn bộ bộ spec.
+
 All requests are handled by Jakarta Servlets mapped via `@WebServlet` or `web.xml`.
 
 | Route | Method | Controller | Access Role | Description |
@@ -8,8 +10,8 @@ All requests are handled by Jakarta Servlets mapped via `@WebServlet` or `web.xm
 | `/register` | GET, POST | `RegisterServlet` | Public | Account registration |
 | `/login` | GET, POST | `LoginServlet` | Public | Authentication & session creation |
 | `/logout` | GET, POST | `LogoutServlet` | Authenticated | Terminate session |
-| `/forgot-password` | GET, POST | `ForgotPasswordServlet` | Public | Request password recovery email |
-| `/reset-password` | GET, POST | `ResetPasswordServlet` | Public | Set new password via token |
+| `/forgot-password` | GET, POST | `ForgotPasswordServlet` | Guest | POST email + CSRF; ACTIVE khớp tạo context server rồi303 reset form, không gửi mail |
+| `/reset-password` | GET, POST | `ResetPasswordServlet` | Guest + context server | GET form; POST password/confirmPassword/flowVersion/CSRF, đổi hash và thu hồi phiên cũ |
 | `/profile` | GET, POST | `ProfileServlet` | Authenticated | View and edit personal profile |
 | `/change-password` | GET, POST | `ChangePasswordServlet` | Authenticated | Update account password |
 | `/movies` | GET | `MovieListServlet` | Public | Browse and filter movies catalog |

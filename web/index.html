@@ -1,15 +1,35 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieHub — Nền Tảng Xem Phim &amp; Đánh Giá Điện Ảnh</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header class="mh-header">
+        <a href="index.html" class="mh-logo">
+            Movie<span>Hub</span>
+        </a>
+        <nav class="mh-nav">
+            <a href="login">Đăng nhập</a>
+            <a href="register" class="mh-btn mh-btn-primary" style="height: 40px; padding: 0 16px;">Đăng ký</a>
+        </nav>
+    </header>
+
+    <main class="mh-auth-container" style="text-align: center;">
+        <div class="mh-auth-card" style="max-width: 600px;">
+            <h1 class="mh-auth-title" style="font-size: 2.2rem; margin-bottom: 16px;">
+                Chào mừng đến với Movie<span>Hub</span>
+            </h1>
+            <p class="mh-auth-subtitle" style="font-size: 1.1rem; margin-bottom: 32px; line-height: 1.6;">
+                Nền tảng khám phá phim điện ảnh, thảo luận và đánh giá chuyên sâu dành cho người yêu điện ảnh.
+            </p>
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="login" class="mh-btn mh-btn-primary" style="min-width: 160px;">Đăng Nhập</a>
+                <a href="register" class="mh-btn" style="min-width: 160px; background-color: var(--mh-surface-high); color: var(--mh-text);">Đăng Ký Tài Khoản</a>
+            </div>
+        </div>
+    </main>
+</body>
 </html>

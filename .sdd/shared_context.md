@@ -1,25 +1,26 @@
-# MovieHub — Shared Agent Context & Synchronization
-<!-- Shared state across agent sessions and subagents -->
-Last Updated: 2026-10-25 | Sprint: Sprint 0 (Setup & Architecture Scaffolding)
+# MovieHub: ngữ cảnh bàn giao agent
 
-## Current Project State
-- **Stage**: Setup & Scaffolding complete; Ready for Feature Specification & Implementation.
-- **Active Sprint Focus**: Folder structure setup, SDD artifacts initialization, rule enforcement.
-- **Git State**: Local repository initialized on branch `main`.
+Cập nhật 2026-10-25 | Giai đoạn: đặc tả MVP, chưa triển khai.
 
-## Module Map & Use Case Traceability
-| Module ID | Directory | Use Cases | Risk Level | Spec Status |
-|:---|:---|:---|:---|:---|
-| `feat-001-auth` | [specs/001-auth](file:///d:/wd%20c%20sang%20d/Documents/NetBeansProjects/MovieHub/specs/001-auth) | UC-01 (Register), UC-02 (Login/Logout), UC-03 (Forgot Password) | High | Scaffolded |
-| `feat-002-user-profile` | [specs/002-user-profile](file:///d:/wd%20c%20sang%20d/Documents/NetBeansProjects/MovieHub/specs/002-user-profile) | UC-04 (View/Update Profile), UC-14 (Change Password) | Medium | Scaffolded |
-| `feat-003-movie-catalog` | [specs/003-movie-catalog](file:///d:/wd%20c%20sang%20d/Documents/NetBeansProjects/MovieHub/specs/003-movie-catalog) | UC-05 (Browse/Filter), UC-06 (Search), UC-07 (Details), UC-17 (History/Trailer) | Medium | Scaffolded |
-| `feat-004-favorites` | [specs/004-favorites](file:///d:/wd%20c%20sang%20d/Documents/NetBeansProjects/MovieHub/specs/004-favorites) | UC-08 (Manage Favorites/Watchlist) | Low | Scaffolded |
-| `feat-005-reviews-rating` | [specs/005-reviews-rating](file:///d:/wd%20c%20sang%20d/Documents/NetBeansProjects/MovieHub/specs/005-reviews-rating) | UC-09 (Post Review/Rating), UC-15 (Moderate Reviews) | Medium | Scaffolded |
-| `feat-006-qa` | [specs/006-qa](file:///d:/wd%20c%20sang%20d/Documents/NetBeansProjects/MovieHub/specs/006-qa) | UC-10 (Post Question), UC-11 (Post Answer), UC-15 (Moderate Q&A) | Medium | Scaffolded |
-| `feat-007-admin-crud` | [specs/007-admin-crud](file:///d:/wd%20c%20sang%20d/Documents/NetBeansProjects/MovieHub/specs/007-admin-crud) | UC-12 (Movies CRUD), UC-13 (Categories CRUD), UC-14 (Users CRUD) | High | Scaffolded |
-| `feat-008-admin-analytics` | [specs/008-admin-analytics](file:///d:/wd%20c%20sang%20d/Documents/NetBeansProjects/MovieHub/specs/008-admin-analytics) | UC-16 (Admin Analytics & Reports) | Medium | Scaffolded |
+## Trạng thái đã xác nhận
 
-## Active Constraints & Flags
-- `allowedlib` strictly active: 4 JARs (`jakarta.servlet.jsp.jstl`, `jaxb-api`, `sqljdbc42`).
-- 0% scriptlets in JSP. All rendering through JSTL `<c:out>` and EL.
-- Tomcat 10.1 (`jakarta.*` namespace).
+- Đã đọc MovieHub_Project_Plan_Java_Ant.md và soạn lại 8 spec Draft; 001-auth hiện v1.1.0 theo R-01, bảy module còn lại v1.0.0. Bản đồ chuẩn: [specs/overview.md](../specs/overview.md).
+- UC-14 là quản lý người dùng ở 007; UC-17 là phim tương tự ở 003. Không phải đổi mật khẩu/lịch sử xem.
+- Đã phân rã đủ UC-01…17, FR-01…26, BR-01…24 nguồn; P0/P1 được phân biệt.
+- User đã cho phép ĐỀ XUẤT bổ sung JAR cần thiết. Chưa có quyền tải/cài hay allowlist mới được duyệt. Đã yêu cầu R-01: email ACTIVE đúng cho đặt password mới trực tiếp, không xác thực/gửi email/OTP/reset token; auth spec hiện v1.1.0.
+- Kiểm kê allowedlib không có JPA/Hibernate/BCrypt/mail provider; TLD JSTL 2.0 có URI cũ. Xem GOV-01 trong [decisions](../specs/shared/decisions.md).
+- business.md cũ khác baseline; phần token reset trong hai constitution được cập nhật theo yêu cầu trực tiếp R-01. GOV-02 của các phần khác vẫn cần chủ dự án chốt trước code.
+- plan.md/tasks.md/checklists.md cũ được giữ kèm cảnh báo, chưa đồng bộ. Chưa hoàn thành speckit-plan/tasks/analyze cho bản spec mới.
+- Chưa build/deploy, chưa chạy unit/integration/browser/UAT; không dùng kiểm tra tài liệu để tuyên bố sản phẩm pass.
+
+## Hợp đồng cần đọc trước khi lập kế hoạch
+
+Quy định UI hiện hành: [ui_rule.md](../ui_rule.md) và [design.md](../design.md), theo yêu cầu trực tiếp R-02/R-03 ngày2026-10-25. Hai constitution và AGENTS.md v2.1.0 đã ghi rule cấm hardcode business data/mocks/fallback và cấm product-generated Business Rules/BR/FR/engineering copy trên cả public/admin. Chưa xây UI hoặc chạy browser trong lần soạn tài liệu thiết kế.
+
+1. [system-rules](../specs/shared/system-rules.md)
+2. [data-contract](../specs/shared/data-contract.md)
+3. [decisions](../specs/shared/decisions.md)
+4. spec module và [traceability](../specs/traceability.md)
+5. [acceptance](../specs/acceptance.md)
+
+Không thêm tính năng ngoài MVP, không tự bỏ JPA/BCrypt/reset password, không tự giải gate bằng dependency không duyệt. Sau khi chủ dự án duyệt: lập plan/tasks từng module, analyze, rồi triển khai theo AGENTS.md và skill bắt buộc.

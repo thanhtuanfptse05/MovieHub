@@ -1,3 +1,5 @@
+> SPEC-REVISION-NOTICE (2026-10-25): Scaffold cũ, chưa đồng bộ với spec.md v1.0.0. Giữ để tham khảo lịch sử; KHÔNG dùng để triển khai hoặc xác nhận nghiệm thu. Sau khi duyệt spec/GOV, tạo lại artifact này và chạy speckit-analyze. Xem [overview](../overview.md) và [decisions](../shared/decisions.md).
+
 # Validation Gate Checklist: 004-favorites
 <!-- 15-Item SDD Pre-Commit Verification Checklist -->
 

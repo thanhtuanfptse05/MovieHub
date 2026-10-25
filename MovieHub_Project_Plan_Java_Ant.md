@@ -1,5 +1,7 @@
 # MOVIEHUB — SOFTWARE REQUIREMENTS & PROJECT IMPLEMENTATION PLAN
 
+> CẬP NHẬT CHỦ DỰ ÁN R-01 (2026-10-25): Phần quên mật khẩu trong baseline bên dưới đã được thay bằng luồng nhập email ACTIVE đã đăng ký → đặt mật khẩu mới ngay, không gửi/xác thực email, không OTP/reset token và không cần SMTP. Đặc tả hiện hành tại [001-auth v1.1.0](specs/001-auth/spec.md) và [R-01](specs/shared/decisions.md). Các đoạn mail/token/PasswordResetTokens trong tài liệu gốc chỉ là lịch sử, không phải yêu cầu triển khai mới.
+
 > **Dự án:** Xử lý và hiển thị thông tin trên website xem phim  
 > **Môn học:** PRJ301 — Java Web Application  
 > **Phiên bản:** 1.0 | **Ngày:** 25/10/2026 | **Trạng thái:** Baseline đề xuất để nhóm thống nhất  

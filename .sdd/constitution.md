@@ -1,6 +1,17 @@
+<!-- Sync Impact Report: 2.0.0 -> 2.1.0 on 2026-10-25, direct owner instructions R-02/R-03.
+Added UI-01 database-backed UI data and UI-02 prohibition of business-rule/developer documentation in product UI.
+Design baseline: design.md; enforceable details: ui_rule.md; entrypoint: AGENTS.md.
+Minor version adds mandatory UI policies. R-01 password recovery and all unrelated constraints are preserved.
+No unresolved placeholders; no application source/build/dependency changes in this documentation task.
+-->
+<!-- Amendment R-01: 1.0.0 -> 2.0.0 on 2026-10-25, direct owner instruction.
+SEC-01 password recovery changed from email/reset-token verification to registered ACTIVE email match.
+Major version records incompatible policy redefinition. Other hard constraints remain unchanged.
+Synced with .specify/memory/constitution.md; auth spec v1.1.0 is the behavioral contract.
+-->
 # PROJECT CONSTITUTION — MovieHub
 <!-- SDD & ADD Framework: Spec-Driven & Agent-Driven Development Playbook -->
-Version: 1.0.0 | Status: LOCKED | Ratified: 2026-10-25 | Project: MovieHub (PRJ301)
+Version: 2.1.0 | Status: LOCKED; owner amendments R-01/R-02/R-03 | Ratified: 2026-10-25 | Last Amended: 2026-10-25 | Project: MovieHub (PRJ301)
 
 ═══════════════════════════════════════════════════════════════════════════
   LAYER 1: HARD RULES — KHÔNG BAO GIỜ VI PHẠM (NON-NEGOTIABLE)
@@ -9,7 +20,7 @@ Version: 1.0.0 | Status: LOCKED | Ratified: 2026-10-25 | Project: MovieHub (PRJ3
 ## SEC-01: Password Security & Cryptography
 - THE system SHALL hash user passwords using BCrypt (work factor >= 12).
 - Plaintext passwords SHALL NEVER be stored, logged, transmitted in error messages, or hardcoded.
-- Password reset tokens MUST be cryptographically secure random tokens (UUID/SecureRandom) with 15-minute expiration time (BR-04).
+- Per direct owner decision R-01 (2026-10-25), password recovery accepts a registered ACTIVE email and opens the new-password form immediately, without email verification, OTP, SMTP or password-reset tokens. Preserve BCrypt and CSRF, bind the target to server session context, update credentialsVersion atomically and revoke old sessions. This flow does not verify email ownership; anyone knowing an ACTIVE email can reset that account. See specs/001-auth/spec.md v1.1.0.
 
 ## SEC-02: Authentication & Role-Based Authorization
 - THE system SHALL authenticate users via HTTP Session (`HttpSession`).
@@ -41,6 +52,18 @@ Version: 1.0.0 | Status: LOCKED | Ratified: 2026-10-25 | Project: MovieHub (PRJ3
 ## SPEC-01: Spec First, Code Second (SDD Core Principle)
 - NO code SHALL be written without an approved `spec.md`, `plan.md`, and `tasks.md`.
 - Implementation must strictly correspond to Acceptance Criteria defined in EARS syntax.
+
+## UI-01: Database-Backed Business Data (R-02)
+
+- UI business records, media metadata, account state, counts, ratings and analytics MUST originate from the database through JPA/Service/DTO/Servlet. Fixed business data in JSP/JS/CSS/JSON or UI-serving Java fixtures is prohibited.
+- Missing/error data MUST use honest empty/error states, never mock fallback content. Demo data MUST be seeded into a DB and queried normally. Static UI tokens/labels and real media runtime state are limited to the exceptions in ui_rule.md.
+- Agents MUST follow design.md and ui_rule.md, trace every business field to its data source and verify DB changes appear without editing UI code before handoff.
+
+## UI-02: Product Copy, Not Engineering Documentation (R-03)
+
+- Public and admin UI MUST NOT render Business Rules panels, BR/FR/UC/NFR codes, developer/agent notes, schema/SQL/ORM explanations or technical stack badges, including tooltip/accessibility copy.
+- Keep rule documentation in specs/docs. Task labels, real statuses and short actionable validation/errors are permitted; server-side business enforcement remains mandatory.
+- UI-01/UI-02 violations block completion; a visually complete mockup is not acceptable evidence of a working database-backed UI.
 
 ═══════════════════════════════════════════════════════════════════════════
   LAYER 2: ARCHITECTURAL CONSTRAINTS & BOUNDARIES
