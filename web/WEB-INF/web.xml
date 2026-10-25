@@ -98,6 +98,33 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>com.moviehub.controller.movie.HomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern></url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MovieListServlet</servlet-name>
+        <servlet-class>com.moviehub.controller.movie.MovieListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MovieListServlet</servlet-name>
+        <url-pattern>/movies</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MovieDetailServlet</servlet-name>
+        <servlet-class>com.moviehub.controller.movie.MovieDetailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MovieDetailServlet</servlet-name>
+        <url-pattern>/movies/detail</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>ErrorServlet</servlet-name>
         <servlet-class>com.moviehub.controller.error.ErrorServlet</servlet-class>
     </servlet>
@@ -142,7 +169,4 @@
         </taglib>
     </jsp-config>
 
-    <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
-    </welcome-file-list>
 </web-app>

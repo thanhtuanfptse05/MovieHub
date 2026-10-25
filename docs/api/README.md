@@ -14,9 +14,9 @@ All requests are handled by Jakarta Servlets mapped via `@WebServlet` or `web.xm
 | `/reset-password` | GET, POST | `ResetPasswordServlet` | Guest + context server | GET form; POST password/confirmPassword/flowVersion/CSRF, đổi hash và thu hồi phiên cũ |
 | `/profile` | GET, POST | `ProfileServlet` | Authenticated | View and edit personal profile |
 | `/change-password` | GET, POST | `ChangePasswordServlet` | Authenticated | Update account password |
-| `/movies` | GET | `MovieListServlet` | Public | Browse and filter movies catalog |
-| `/movies/search` | GET | `MovieSearchServlet` | Public | Search movies by keyword |
-| `/movies/detail` | GET | `MovieDetailServlet` | Public | View movie synopsis, trailer & reviews |
+| `/` | GET | `HomeServlet` | Public | Home: featured, newest, most viewed, top rated |
+| `/movies` | GET | `MovieListServlet` | Public | Search (q), category, year, sort, page; 400 on invalid filter |
+| `/movies/detail` | GET | `MovieDetailServlet` | Public | Movie detail by `id`; 404 if not PUBLISHED; counts one view per session per 30 min |
 | `/favorites` | GET | `FavoriteServlet` | Authenticated | View personal watchlist |
 | `/favorites/add` | POST | `FavoriteServlet` | Authenticated | Add movie to favorites |
 | `/favorites/remove` | POST | `FavoriteServlet` | Authenticated | Remove movie from favorites |

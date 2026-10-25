@@ -5,6 +5,10 @@
     <persistence-unit name="MovieHubPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.moviehub.entity.User</class>
+        <class>com.moviehub.entity.Movie</class>
+        <class>com.moviehub.entity.Category</class>
+        <class>com.moviehub.entity.Review</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
         
         <properties>
             <!-- Database Connection Settings -->

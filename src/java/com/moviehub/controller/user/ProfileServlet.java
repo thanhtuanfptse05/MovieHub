@@ -99,7 +99,7 @@ public class ProfileServlet extends HttpServlet {
             userService.updateProfile(userId, fullName, avatarUrl, version);
 
             // Refresh display data in current session
-            session.setAttribute("userFullName", ValidationUtil.normalizeFullName(fullName));
+            session.setAttribute("userName", ValidationUtil.normalizeFullName(fullName));
             session.setAttribute("userAvatarUrl", ValidationUtil.normalizeAvatarUrl(avatarUrl));
 
             // Set PRG flash message
