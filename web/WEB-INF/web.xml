@@ -161,6 +161,24 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ReviewSaveServlet</servlet-name>
+        <servlet-class>com.moviehub.controller.review.ReviewSaveServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReviewSaveServlet</servlet-name>
+        <url-pattern>/reviews/save</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ReviewDeleteServlet</servlet-name>
+        <servlet-class>com.moviehub.controller.review.ReviewDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReviewDeleteServlet</servlet-name>
+        <url-pattern>/reviews/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>ErrorServlet</servlet-name>
         <servlet-class>com.moviehub.controller.error.ErrorServlet</servlet-class>
     </servlet>

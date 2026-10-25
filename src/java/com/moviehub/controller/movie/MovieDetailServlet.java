@@ -26,11 +26,13 @@ public class MovieDetailServlet extends HttpServlet {
 
     private MovieService movieService;
     private com.moviehub.service.FavoriteService favoriteService;
+    private com.moviehub.service.ReviewService reviewService;
 
     @Override
     public void init() throws ServletException {
         this.movieService = new MovieService();
         this.favoriteService = new com.moviehub.service.FavoriteService();
+        this.reviewService = new com.moviehub.service.ReviewService();
     }
 
     @Override
@@ -60,17 +62,37 @@ public class MovieDetailServlet extends HttpServlet {
             HttpSession session = request.getSession(false);
             Long userId = (session != null) ? (Long) session.getAttribute("userId") : null;
             boolean isFavorited = false;
+            com.moviehub.dto.ReviewItem userReview = null;
+
             if (userId != null) {
                 try {
                     isFavorited = favoriteService.isFavorited(userId, id);
                 } catch (RuntimeException ex) {
                     LOGGER.log(Level.WARNING, "Favorite check failed for user " + userId + ", movie " + id + ": " + ex.getMessage());
                 }
+                try {
+                    userReview = reviewService.getUserReview(userId, id).orElse(null);
+                } catch (RuntimeException ex) {
+                    LOGGER.log(Level.WARNING, "User review check failed for user " + userId + ", movie " + id + ": " + ex.getMessage());
+                }
             }
+
+            int reviewPage = 1;
+            String reviewPageStr = request.getParameter("reviewPage");
+            if (reviewPageStr != null && reviewPageStr.trim().matches("[0-9]{1,9}")) {
+                try {
+                    reviewPage = Math.max(1, Integer.parseInt(reviewPageStr.trim()));
+                } catch (NumberFormatException ignored) {
+                }
+            }
+
+            com.moviehub.dto.ReviewPage reviewsPage = reviewService.getPublicReviews(id, reviewPage);
 
             request.setAttribute("movie", detail);
             request.setAttribute("isFavorited", isFavorited);
             request.setAttribute("similar", movieService.getSimilar(id));
+            request.setAttribute("reviewsPage", reviewsPage);
+            request.setAttribute("userReview", userReview);
             request.getRequestDispatcher("/WEB-INF/views/movie/movie-detail.jsp").forward(request, response);
         } catch (RuntimeException ex) {
             LOGGER.log(Level.SEVERE, "Failed loading movie " + id + ": " + ex.getMessage(), ex);

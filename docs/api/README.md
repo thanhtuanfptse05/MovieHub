@@ -17,11 +17,11 @@ All requests are handled by Jakarta Servlets mapped via `@WebServlet` or `web.xm
 | `/` | GET | `HomeServlet` | Public | Home: featured, newest, most viewed, top rated |
 | `/movies` | GET | `MovieListServlet` | Public | Search (q), category, year, sort, page; 400 on invalid filter |
 | `/movies/detail` | GET | `MovieDetailServlet` | Public | Movie detail by `id`; 404 if not PUBLISHED; counts one view per session per 30 min |
-| `/favorites` | GET | `FavoriteServlet` | Authenticated | View personal watchlist |
-| `/favorites/add` | POST | `FavoriteServlet` | Authenticated | Add movie to favorites |
-| `/favorites/remove` | POST | `FavoriteServlet` | Authenticated | Remove movie from favorites |
-| `/reviews/submit` | POST | `ReviewServlet` | Authenticated | Submit or edit movie review |
-| `/reviews/delete` | POST | `ReviewServlet` | Authenticated | Delete own review |
+| `/favorites` | GET | `FavoriteListServlet` | Authenticated | View personal watchlist with pagination (10/page) |
+| `/favorites/add` | POST | `FavoriteAddServlet` | Authenticated | Add movie to favorites (303 redirect) |
+| `/favorites/remove` | POST | `FavoriteRemoveServlet` | Authenticated | Remove movie from favorites (303 redirect) |
+| `/reviews/save` | POST | `ReviewSaveServlet` | Authenticated | Create (mode=create) or update (mode=update) movie review (303 redirect) |
+| `/reviews/delete` | POST | `ReviewDeleteServlet` | Authenticated | Soft-delete own review (303 redirect) |
 | `/qa/questions/create`| POST | `QAServlet` | Authenticated | Post question on movie |
 | `/qa/answers/create` | POST | `QAServlet` | Authenticated | Post answer to question |
 | `/qa/answers/accept` | POST | `QAServlet` | Authenticated | Accept answer |

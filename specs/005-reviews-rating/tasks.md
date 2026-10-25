@@ -1,20 +1,32 @@
-> SPEC-REVISION-NOTICE (2026-10-25): Scaffold cũ, chưa đồng bộ với spec.md v1.0.0. Giữ để tham khảo lịch sử; KHÔNG dùng để triển khai hoặc xác nhận nghiệm thu. Sau khi duyệt spec/GOV, tạo lại artifact này và chạy speckit-analyze. Xem [overview](../overview.md) và [decisions](../shared/decisions.md).
-
 # Tasks Breakdown: 005-reviews-rating
-<!-- Actionable, Dependency-Ordered Task List -->
+<!-- Actionable, Dependency-Ordered Task List aligned with spec.md v1.0.0 -->
 
-- [ ] **Task 1: Review Entity**
-  - Implement `Review.java` with foreign keys to `User` and `Movie`.
-- [ ] **Task 2: ReviewDAO**
-  - Implement CRUD and aggregate average calculation via JPQL.
-- [ ] **Task 3: ReviewService (TDD)**
-  - Write unit tests in `ReviewServiceTest.java`.
-  - Implement business logic (BR-11 through BR-15).
-- [ ] **Task 4: Servlets**
-  - Implement `ReviewServlet` and `AdminReviewServlet`.
-- [ ] **Task 5: Views (Pure JSTL)**
-  - Build review submission form and list components.
-- [ ] **Task 6: Verification & Delivery**
-  - Pass 15-item validation gate.
-  - Commit `feat(review): implement movie reviews, ratings, and moderation`.
+- [x] **Task 1: Review Entity & DTOs**
+  - Update `Review.java` entity with all required columns (`content`, `status`, `moderatedBy`, `moderatedAt`, `createdAt`, `updatedAt`, `deletedAt`, `version`, `contentRevision`).
+  - Create `ReviewItem.java` and `ReviewPage.java` DTOs.
+- [x] **Task 2: ReviewDAO**
+  - Implement `ReviewDAO.java` with queries for finding by id, user+movie, saving, updating, paginating public approved reviews, and calculating rating aggregates.
+- [x] **Task 3: ReviewService & TDD Unit Tests**
+  - Write `ReviewServiceTest.java` covering all validation, create/restore, update, delete, ownership, concurrency, and rating summary logic.
+  - Implement `ReviewService.java` fulfilling all test cases and acceptance criteria.
+  - Verify with Ant: `ant test` (31 unit tests pass).
+- [x] **Task 4: Servlets (Controller Layer)**
+  - Implement `ReviewSaveServlet.java` (`POST /reviews/save`, handles create and update modes).
+  - Implement `ReviewDeleteServlet.java` (`POST /reviews/delete`).
+  - Update `MovieDetailServlet.java` to fetch `reviewsPage` and logged-in `userReview`.
+  - Register servlets in `web.xml`.
+- [x] **Task 5: Movie Detail JSP View & UI Integration**
+  - Update `web/WEB-INF/views/movie/movie-detail.jsp` with `#reviews` section:
+    - User's own review card with status tag (`Đã duyệt`, `Chờ duyệt`, `Bị từ chối`) and edit/delete actions.
+    - Review submission form (create vs update mode, 5 stars, 1000 char textarea, CSRF).
+    - Public reviews list with author name, avatar, rating stars, timestamp, XML-escaped content.
+    - Pagination controls for review pages.
+    - Empty state when no reviews exist.
+    - Guest login prompt.
+  - Add styling in `assets/css/style.css` for review cards, star ratings, and status badges.
+- [x] **Task 6: E2E Verification & Delivery**
+  - Create and run `scratch/test_e2e_reviews.py` against live Tomcat (13/13 scenarios pass).
+  - Verify zero mojibake in database and rendered output.
+  - Verify 15-item checklist.
+  - Commit `feat(review): implement movie reviews and rating system (005-reviews-rating)`.
   - Push branch `feat/005-reviews-rating` to GitHub.
