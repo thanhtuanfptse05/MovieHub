@@ -1,0 +1,10 @@
+<%@ page pageEncoding="UTF-8" %>
+<c:if test="${not empty flashSuccess}"><div class="mh-admin-notice" role="status"><c:out value="${flashSuccess}" /></div></c:if>
+<c:if test="${not empty flashError}"><div class="mh-admin-notice mh-admin-notice-error" role="alert"><c:out value="${flashError}" /></div></c:if>
+<c:if test="${not empty errorMessage}"><div class="mh-admin-notice mh-admin-notice-error" role="alert"><c:out value="${errorMessage}" /></div></c:if>
+<c:if test="${not empty fieldErrors}">
+    <div class="mh-admin-notice mh-admin-notice-error" role="alert" tabindex="-1" data-error-summary>
+        <p>Vui lòng kiểm tra thông tin:</p>
+        <ul><c:forEach var="fieldError" items="${fieldErrors}"><li><a href="#field-<c:out value='${fieldError.key}' />"><c:out value="${fieldError.value}" /></a></li></c:forEach></ul>
+    </div>
+</c:if>

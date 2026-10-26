@@ -25,8 +25,20 @@ All requests are handled by Jakarta Servlets mapped via `@WebServlet` or `web.xm
 | `/qa/questions/create`| POST | `QAServlet` | Authenticated | Post question on movie |
 | `/qa/answers/create` | POST | `QAServlet` | Authenticated | Post answer to question |
 | `/qa/answers/accept` | POST | `QAServlet` | Authenticated | Accept answer |
-| `/admin/dashboard` | GET | `AdminDashboardServlet` | ADMIN | Executive KPI dashboard & analytics |
-| `/admin/movies/*` | GET, POST | `AdminMovieServlet` | ADMIN | CRUD management for movies |
-| `/admin/categories/*`| GET, POST| `AdminCategoryServlet` | ADMIN | CRUD management for categories |
-| `/admin/users/*` | GET, POST | `AdminUserServlet` | ADMIN | Manage user roles & ban status |
-| `/admin/reviews/*` | GET, POST | `AdminReviewServlet` | ADMIN | Moderate flagged reviews |
+| `/admin`, `/admin/` | GET | `AdminHomeServlet` | ACTIVE ADMIN | 303 to `/admin/dashboard` |
+| `/admin/dashboard` | GET | `AdminHomeServlet` | ACTIVE ADMIN | Navigation to administration modules; analytics belongs to 008 |
+| `/admin/movies` | GET | `AdminMovieServlet` | ACTIVE ADMIN | q/status/page; updatedAt DESC,id DESC; 10 rows |
+| `/admin/movies/create` | GET, POST | `AdminMovieServlet` | ACTIVE ADMIN | Movie fields, categoryIds, session submissionId and CSRF; retry does not insert twice |
+| `/admin/movies/edit` | GET, POST | `AdminMovieServlet` | ACTIVE ADMIN | id/version and allowlisted movie fields; atomic category replacement |
+| `/admin/movies/hide` | POST | `AdminMovieServlet` | ACTIVE ADMIN | id/version/CSRF; HIDDEN, preserving interactions |
+| `/admin/categories` | GET | `AdminCategoryServlet` | ACTIVE ADMIN | q/page; active categories and creation form |
+| `/admin/categories/edit` | GET | `AdminCategoryServlet` | ACTIVE ADMIN | id; category edit form |
+| `/admin/categories/save` | POST | `AdminCategoryServlet` | ACTIVE ADMIN | name/slug; optional id and edit version; CSRF |
+| `/admin/categories/delete` | POST | `AdminCategoryServlet` | ACTIVE ADMIN | id/version/CSRF; soft delete only when no movie links |
+| `/admin/users` | GET | `AdminUserServlet` | ACTIVE ADMIN | q(email)/role/status/page; safe DTOs exclude credentials |
+| `/admin/users/edit` | GET | `AdminUserServlet` | ACTIVE ADMIN | id; role/status form |
+| `/admin/users/update` | POST | `AdminUserServlet` | ACTIVE ADMIN | id/version/role/status/CSRF; self-revocation and last-active-admin protection |
+| `/admin/moderation` | GET | `AdminModerationServlet` | ACTIVE ADMIN | type(all/review/question/answer),status,page; oldest first |
+| `/admin/moderation/decide` | POST | `AdminModerationServlet` | ACTIVE ADMIN | type/id/action(APPROVE/REJECT)/version/contentRevision/CSRF; preserves audit on safe retry |
+
+Admin methods are checked before authentication and CSRF. Guest requests to supported protected methods receive 303 login; authenticated USER receives 403. Invalid fields/filters return 400; missing resources 404; stale state/invariant conflicts 409; unsupported methods 405. Successful writes use 303 and a one-use flash. POST returnQ/returnStatus/returnRole/returnType/returnPage retain list context. No physical deletion endpoint or separate per-type moderation endpoint exists.

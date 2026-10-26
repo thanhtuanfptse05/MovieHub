@@ -26,6 +26,12 @@ public class Category implements Serializable {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    @Column(name = "name_key", nullable = false, length = 300)
+    private String nameKey;
+
+    public String getNameKey() { return nameKey; }
+    public void setNameKey(String nameKey) { this.nameKey = nameKey; }
+
     @Column(name = "slug", nullable = false, length = 120)
     private String slug;
 
@@ -34,6 +40,13 @@ public class Category implements Serializable {
 
     @Column(name = "deleted_at")
     private Instant deletedAt;
+
+    @jakarta.persistence.Version
+    @Column(name = "version", nullable = false)
+    private Integer version = 1;
+
+    public Integer getVersion() { return version; }
+    public void setVersion(Integer version) { this.version = version; }
 
     public Long getId() {
         return id;

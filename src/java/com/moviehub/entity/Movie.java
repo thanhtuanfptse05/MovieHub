@@ -72,6 +72,7 @@ public class Movie implements Serializable {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
+    @jakarta.persistence.Version
     @Column(name = "version", nullable = false)
     private Integer version = 1;
 

@@ -28,10 +28,6 @@
         <filter-name>CSRFFilter</filter-name>
         <filter-class>com.moviehub.filter.CSRFFilter</filter-class>
     </filter>
-    <filter-mapping>
-        <filter-name>CSRFFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
 
     <filter>
         <filter-name>AuthFilter</filter-name>
@@ -50,8 +46,22 @@
         <filter-name>AdminAuthFilter</filter-name>
         <url-pattern>/admin/*</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>CSRFFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <!-- Servlets -->
+    <servlet><servlet-name>AdminHomeServlet</servlet-name><servlet-class>com.moviehub.controller.admin.AdminHomeServlet</servlet-class></servlet>
+    <servlet-mapping><servlet-name>AdminHomeServlet</servlet-name><url-pattern>/admin</url-pattern><url-pattern>/admin/</url-pattern><url-pattern>/admin/dashboard</url-pattern></servlet-mapping>
+    <servlet><servlet-name>AdminMovieServlet</servlet-name><servlet-class>com.moviehub.controller.admin.AdminMovieServlet</servlet-class></servlet>
+    <servlet-mapping><servlet-name>AdminMovieServlet</servlet-name><url-pattern>/admin/movies/*</url-pattern></servlet-mapping>
+    <servlet><servlet-name>AdminCategoryServlet</servlet-name><servlet-class>com.moviehub.controller.admin.AdminCategoryServlet</servlet-class></servlet>
+    <servlet-mapping><servlet-name>AdminCategoryServlet</servlet-name><url-pattern>/admin/categories/*</url-pattern></servlet-mapping>
+    <servlet><servlet-name>AdminUserServlet</servlet-name><servlet-class>com.moviehub.controller.admin.AdminUserServlet</servlet-class></servlet>
+    <servlet-mapping><servlet-name>AdminUserServlet</servlet-name><url-pattern>/admin/users/*</url-pattern></servlet-mapping>
+    <servlet><servlet-name>AdminModerationServlet</servlet-name><servlet-class>com.moviehub.controller.admin.AdminModerationServlet</servlet-class></servlet>
+    <servlet-mapping><servlet-name>AdminModerationServlet</servlet-name><url-pattern>/admin/moderation/*</url-pattern></servlet-mapping>
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>com.moviehub.controller.auth.RegisterServlet</servlet-class>

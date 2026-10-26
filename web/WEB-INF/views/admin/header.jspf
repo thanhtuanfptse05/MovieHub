@@ -1,0 +1,24 @@
+<%@ page pageEncoding="UTF-8" %>
+<c:url var="adminHomeUrl" value="/admin/dashboard" />
+<c:url var="adminMoviesUrl" value="/admin/movies" />
+<c:url var="adminCategoriesUrl" value="/admin/categories" />
+<c:url var="adminUsersUrl" value="/admin/users" />
+<c:url var="adminModerationUrl" value="/admin/moderation" />
+<c:url var="publicHomeUrl" value="/" />
+<a class="mh-admin-skip" href="#admin-main">Đến nội dung</a>
+<header class="mh-admin-header">
+    <a class="mh-logo" href="<c:out value='${adminHomeUrl}' />">Movie<span>Hub</span></a>
+    <span class="mh-admin-scope">Quản trị</span>
+    <details class="mh-admin-switcher" data-admin-menu>
+        <summary aria-controls="admin-navigation">Chuyển mục <span aria-hidden="true">⌄</span></summary>
+        <nav id="admin-navigation" class="mh-admin-navigation" aria-label="Điều hướng quản trị">
+            <a href="<c:out value='${adminHomeUrl}' />" <c:if test="${adminSection == 'dashboard'}">aria-current="page"</c:if>>Tổng quan</a>
+            <a href="<c:out value='${adminMoviesUrl}' />" <c:if test="${adminSection == 'movies'}">aria-current="page"</c:if>>Phim</a>
+            <a href="<c:out value='${adminCategoriesUrl}' />" <c:if test="${adminSection == 'categories'}">aria-current="page"</c:if>>Thể loại</a>
+            <a href="<c:out value='${adminUsersUrl}' />" <c:if test="${adminSection == 'users'}">aria-current="page"</c:if>>Người dùng</a>
+            <a href="<c:out value='${adminModerationUrl}' />" <c:if test="${adminSection == 'moderation'}">aria-current="page"</c:if>>Duyệt nội dung</a>
+            <a href="<c:out value='${publicHomeUrl}' />">Về trang xem phim</a>
+        </nav>
+    </details>
+    <a class="mh-admin-public-link" href="<c:out value='${publicHomeUrl}' />">Về trang xem phim</a>
+</header>

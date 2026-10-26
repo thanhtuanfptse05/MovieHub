@@ -1,0 +1,6 @@
+<%@ page pageEncoding="UTF-8" %>
+<input type="hidden" name="returnQ" value="<c:out value='${q}' />">
+<input type="hidden" name="returnStatus" value="<c:out value='${status}' />">
+<input type="hidden" name="returnRole" value="<c:out value='${role}' />">
+<input type="hidden" name="returnType" value="<c:out value='${type}' />">
+<input type="hidden" name="returnPage" value="<c:out value='${empty pageResult ? returnPage : pageResult.page}' />">

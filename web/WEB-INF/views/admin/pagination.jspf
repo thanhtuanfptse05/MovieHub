@@ -1,0 +1,14 @@
+<%@ page pageEncoding="UTF-8" %>
+<c:if test="${not empty pageResult and pageResult.totalPages > 1}">
+    <nav class="mh-admin-pagination" aria-label="Phân trang">
+        <c:if test="${pageResult.hasPrevious}">
+            <c:url var="previousUrl" value="${listPath}"><c:param name="q" value="${q}" /><c:param name="status" value="${status}" /><c:param name="role" value="${role}" /><c:param name="type" value="${type}" /><c:param name="page" value="${pageResult.page - 1}" /></c:url>
+            <a class="mh-admin-button" rel="prev" href="<c:out value='${previousUrl}' />">Trang trước</a>
+        </c:if>
+        <span aria-current="page">Trang <c:out value="${pageResult.page}" /> / <c:out value="${pageResult.totalPages}" /></span>
+        <c:if test="${pageResult.hasNext}">
+            <c:url var="nextUrl" value="${listPath}"><c:param name="q" value="${q}" /><c:param name="status" value="${status}" /><c:param name="role" value="${role}" /><c:param name="type" value="${type}" /><c:param name="page" value="${pageResult.page + 1}" /></c:url>
+            <a class="mh-admin-button" rel="next" href="<c:out value='${nextUrl}' />">Trang sau</a>
+        </c:if>
+    </nav>
+</c:if>
