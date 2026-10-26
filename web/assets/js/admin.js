@@ -94,6 +94,7 @@
         });
         document.addEventListener('click', function (event) { if (!menu.contains(event.target)) menu.open = false; });
     });
+
     document.querySelectorAll('[data-poster]').forEach(function (poster) {
         function usePlaceholder() {
             var placeholder = document.createElement('span');
@@ -104,6 +105,123 @@
         poster.addEventListener('error', usePlaceholder, { once: true });
         if (poster.complete && poster.naturalWidth === 0) usePlaceholder();
     });
+
     var errors = document.querySelector('[data-error-summary]');
     if (errors) errors.focus();
+
+    // Studio Sidebar Drawer Controls
+    var sidebarToggle = document.getElementById('sidebar-toggle');
+    var sidebarClose = document.getElementById('sidebar-close');
+    var sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+    function openSidebar() {
+        document.body.classList.add('mh-sidebar-open');
+    }
+    function closeSidebar() {
+        document.body.classList.remove('mh-sidebar-open');
+    }
+
+    if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
+    if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+    if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && document.body.classList.contains('mh-sidebar-open')) {
+            closeSidebar();
+        }
+    });
+
+    // YouTube Studio SVG Line & Area Chart Engine
+    var chartPoints = document.querySelectorAll('.mh-chart-point');
+    var chartLine = document.getElementById('studio-chart-line');
+    var chartArea = document.getElementById('studio-chart-area');
+    var hoverLine = document.getElementById('chart-hover-line');
+    var tooltip = document.getElementById('chart-tooltip');
+    var chartContainer = document.getElementById('chart-container');
+
+    if (chartPoints.length > 0 && chartLine && chartArea) {
+        var pts = [];
+        chartPoints.forEach(function (pt) {
+            pts.push({
+                x: parseFloat(pt.getAttribute('cx')),
+                y: parseFloat(pt.getAttribute('cy')),
+                element: pt
+            });
+        });
+
+        // Generate smooth cubic bezier path
+        var pathD = 'M ' + pts[0].x + ' ' + pts[0].y;
+        for (var i = 1; i < pts.length; i++) {
+            var prev = pts[i - 1];
+            var curr = pts[i];
+            var cpX = (prev.x + curr.x) / 2;
+            pathD += ' C ' + cpX + ' ' + prev.y + ', ' + cpX + ' ' + curr.y + ', ' + curr.x + ' ' + curr.y;
+        }
+
+        chartLine.setAttribute('d', pathD);
+
+        // Fill area down to baseline at y=200
+        var areaD = pathD + ' L ' + pts[pts.length - 1].x + ' 200 L ' + pts[0].x + ' 200 Z';
+        chartArea.setAttribute('d', areaD);
+
+        // Interactive hover cards
+        var viewUnit = '\u006c\u01b0\u1ee3\u0074\u0020\u0078\u0065\u006d'; // "lượt xem"
+
+        pts.forEach(function (pt) {
+            function showPointCard(e) {
+                var rank = pt.element.dataset.rank;
+                var title = pt.element.dataset.title;
+                var views = Number(pt.element.dataset.views || 0);
+                var year = pt.element.dataset.year;
+
+                if (hoverLine) {
+                    hoverLine.setAttribute('x1', pt.x);
+                    hoverLine.setAttribute('x2', pt.x);
+                    hoverLine.style.display = 'block';
+                }
+
+                pt.element.setAttribute('r', '9');
+                pt.element.classList.add('is-active-point');
+
+                if (tooltip && chartContainer) {
+                    tooltip.innerHTML = '<div class="mh-tt-rank">#' + rank + (year ? ' \u2022 ' + year : '') + '</div>' +
+                                        '<div class="mh-tt-title">' + title + '</div>' +
+                                        '<div class="mh-tt-views">' + views.toLocaleString() + ' ' + viewUnit + '</div>';
+                    tooltip.style.display = 'block';
+
+                    var rect = chartContainer.getBoundingClientRect();
+                    var svgWidth = 760;
+                    var svgHeight = 260;
+                    var scaleX = rect.width / svgWidth;
+                    var scaleY = rect.height / svgHeight;
+
+                    var tipLeft = (pt.x * scaleX);
+                    var tipTop = (pt.y * scaleY) - 16;
+
+                    tooltip.style.left = tipLeft + 'px';
+                    tooltip.style.top = tipTop + 'px';
+                }
+            }
+
+            function hidePointCard() {
+                pt.element.setAttribute('r', '6');
+                pt.element.classList.remove('is-active-point');
+                if (hoverLine) hoverLine.style.display = 'none';
+                if (tooltip) tooltip.style.display = 'none';
+            }
+
+            pt.element.addEventListener('mouseenter', showPointCard);
+            pt.element.addEventListener('focus', showPointCard);
+            pt.element.addEventListener('mouseleave', hidePointCard);
+            pt.element.addEventListener('blur', hidePointCard);
+        });
+
+        if (chartContainer) {
+            chartContainer.addEventListener('mouseleave', function () {
+                if (hoverLine) hoverLine.style.display = 'none';
+                if (tooltip) tooltip.style.display = 'none';
+                pts.forEach(function (pt) { pt.element.setAttribute('r', '6'); });
+            });
+        }
+    }
 }());
