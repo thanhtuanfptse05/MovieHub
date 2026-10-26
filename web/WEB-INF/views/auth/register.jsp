@@ -13,52 +13,97 @@
     <mh:header />
 
     <main class="mh-auth-container">
-        <div class="mh-auth-card">
-            <div class="mh-auth-header">
-                <h1 class="mh-auth-title">Tạo tài khoản</h1>
-                <p class="mh-auth-subtitle">Trở thành thành viên của cộng đồng điện ảnh MovieHub</p>
+        <div class="mh-auth-glow-1" aria-hidden="true"></div>
+        <div class="mh-auth-glow-2" aria-hidden="true"></div>
+
+        <div class="mh-auth-layout">
+            <div class="mh-auth-showcase">
+                <div class="mh-auth-pill">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <span>Gia Nhập Rạp Chiếu MovieHub</span>
+                </div>
+                <h2 class="mh-auth-showcase-title">Tạo Tài Khoản <br><span class="mh-gradient-text">Trải Nghiệm Miễn Phí</span></h2>
+                <p class="mh-auth-showcase-desc">
+                    Trở thành thành viên của cộng đồng điện ảnh MovieHub để khám phá hàng ngàn tựa phim bom tấn, lưu trữ bộ sưu tập yêu thích và tham gia các cuộc thảo luận chuyên sâu.
+                </p>
+                <ul class="mh-auth-features">
+                    <li class="mh-auth-feature-item">
+                        <svg class="mh-auth-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Tài khoản hoàn toàn miễn phí, không phát sinh chi phí ẩn</span>
+                    </li>
+                    <li class="mh-auth-feature-item">
+                        <svg class="mh-auth-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        <span>Quản lý danh sách phim yêu thích cá nhân</span>
+                    </li>
+                    <li class="mh-auth-feature-item">
+                        <svg class="mh-auth-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span>Bảo mật tài khoản đa lớp chuẩn hiện đại</span>
+                    </li>
+                </ul>
             </div>
 
-            <c:if test="${not empty errorMessage}">
-                <div class="mh-alert mh-alert-error" role="alert">
-                    <c:out value="${errorMessage}" escapeXml="true" />
-                </div>
-            </c:if>
-
-            <form action="${pageContext.request.contextPath}/register" method="POST">
-                <input type="hidden" name="csrfToken" value="<c:out value="${csrfToken}" escapeXml="true" />">
-
-                <div class="mh-form-group">
-                    <label for="fullName" class="mh-label">Họ và tên</label>
-                    <input type="text" id="fullName" name="fullName" class="mh-input" 
-                           value="<c:out value="${fullName}" escapeXml="true" />" 
-                           placeholder="Nguyễn Văn A" required maxlength="100" autocomplete="name">
+            <div class="mh-auth-card">
+                <div class="mh-auth-header">
+                    <h1 class="mh-auth-title">Đăng ký tài khoản</h1>
+                    <p class="mh-auth-subtitle">Trở thành thành viên của rạp chiếu điện ảnh MovieHub</p>
                 </div>
 
-                <div class="mh-form-group">
-                    <label for="email" class="mh-label">Địa chỉ email</label>
-                    <input type="email" id="email" name="email" class="mh-input" 
-                           value="<c:out value="${email}" escapeXml="true" />" 
-                           placeholder="name@example.com" required maxlength="255" autocomplete="email">
+                <c:if test="${not empty errorMessage}">
+                    <div class="mh-alert mh-alert-error" role="alert">
+                        <c:out value="${errorMessage}" escapeXml="true" />
+                    </div>
+                </c:if>
+
+                <form action="${pageContext.request.contextPath}/register" method="POST">
+                    <input type="hidden" name="csrfToken" value="<c:out value="${csrfToken}" escapeXml="true" />">
+
+                    <div class="mh-form-group">
+                        <label for="fullName" class="mh-label">Họ và tên</label>
+                        <div class="mh-input-wrap">
+                            <svg class="mh-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <input type="text" id="fullName" name="fullName" class="mh-input mh-input-with-icon" 
+                                   value="<c:out value="${fullName}" escapeXml="true" />" 
+                                   placeholder="Nguyễn Văn A" required maxlength="100" autocomplete="name">
+                        </div>
+                    </div>
+
+                    <div class="mh-form-group">
+                        <label for="email" class="mh-label">Địa chỉ email</label>
+                        <div class="mh-input-wrap">
+                            <svg class="mh-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <input type="email" id="email" name="email" class="mh-input mh-input-with-icon" 
+                                   value="<c:out value="${email}" escapeXml="true" />" 
+                                   placeholder="name@example.com" required maxlength="255" autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="mh-form-group">
+                        <label for="password" class="mh-label">Mật khẩu</label>
+                        <div class="mh-input-wrap">
+                            <svg class="mh-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="password" name="password" class="mh-input mh-input-with-icon" 
+                                   placeholder="Tối thiểu 8 ký tự" required minlength="8" autocomplete="new-password">
+                        </div>
+                    </div>
+
+                    <div class="mh-form-group">
+                        <label for="confirmPassword" class="mh-label">Xác nhận mật khẩu</label>
+                        <div class="mh-input-wrap">
+                            <svg class="mh-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="mh-input mh-input-with-icon" 
+                                   placeholder="Nhập lại mật khẩu" required autocomplete="new-password">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="mh-btn mh-btn-primary mh-btn-block" style="border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span>Đăng Ký Tài Khoản</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
+                </form>
+
+                <div class="mh-auth-footer">
+                    Đã có tài khoản? <a href="${pageContext.request.contextPath}/login" style="color: #fff; font-weight: 600;">Đăng nhập ngay</a>
                 </div>
-
-                <div class="mh-form-group">
-                    <label for="password" class="mh-label">Mật khẩu</label>
-                    <input type="password" id="password" name="password" class="mh-input" 
-                           placeholder="Tối thiểu 8 ký tự" required minlength="8" autocomplete="new-password">
-                </div>
-
-                <div class="mh-form-group">
-                    <label for="confirmPassword" class="mh-label">Xác nhận mật khẩu</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" class="mh-input" 
-                           placeholder="Nhập lại mật khẩu" required autocomplete="new-password">
-                </div>
-
-                <button type="submit" class="mh-btn mh-btn-primary mh-btn-block">Đăng Ký Tài Khoản</button>
-            </form>
-
-            <div class="mh-auth-footer">
-                Đã có tài khoản? <a href="${pageContext.request.contextPath}/login">Đăng nhập ngay</a>
             </div>
         </div>
     </main>
