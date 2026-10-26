@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="mh" tagdir="/WEB-INF/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="vi">
@@ -11,24 +12,7 @@
     <link rel="stylesheet" href="${ctx}/assets/css/style.css">
 </head>
 <body>
-    <header class="mh-header">
-        <a href="${ctx}/" class="mh-logo">
-            Movie<span>Hub</span>
-        </a>
-        <nav class="mh-nav" aria-label="Điều hướng chính">
-            <a href="${ctx}/" class="mh-nav-link">Trang chủ</a>
-            <a href="${ctx}/movies" class="mh-nav-link">Phim</a>
-            <c:choose>
-                <c:when test="${not empty sessionScope.userId}">
-                    <a href="${ctx}/favorites" class="mh-nav-link">Yêu thích</a>
-                    <a href="${ctx}/profile" class="mh-nav-link">Tài khoản</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="${ctx}/login" class="mh-btn mh-btn-secondary mh-btn-sm" style="height: 38px; padding: 0 16px;">Đăng nhập</a>
-                </c:otherwise>
-            </c:choose>
-        </nav>
-    </header>
+    <mh:header />
 
     <main class="mh-error-page mh-error-page-403">
         <article class="mh-error-card">
@@ -87,5 +71,7 @@
             </nav>
         </article>
     </main>
+
+    <mh:footer />
 </body>
 </html>

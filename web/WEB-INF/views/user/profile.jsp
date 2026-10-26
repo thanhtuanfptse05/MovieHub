@@ -110,11 +110,12 @@
                 </div>
 
                 <div class="mh-form-actions">
-                    <a href="${pageContext.request.contextPath}/" class="mh-btn mh-btn-secondary">
+                    <a href="${pageContext.request.contextPath}/" class="mh-btn mh-btn-secondary" style="border-radius: 9999px;">
                         Về trang chủ
                     </a>
-                    <button type="submit" class="mh-btn mh-btn-primary">
-                        Lưu thay đổi
+                    <button type="submit" class="mh-btn mh-btn-primary" style="border-radius: 9999px; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                        <span>Lưu thay đổi</span>
                     </button>
                 </div>
             </form>

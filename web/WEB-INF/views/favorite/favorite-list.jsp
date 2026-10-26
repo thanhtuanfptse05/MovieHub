@@ -71,8 +71,9 @@
                                         <input type="hidden" name="csrfToken" value="<c:out value="${csrfToken}" escapeXml="true" />">
                                         <input type="hidden" name="movieId" value="${item.id}">
                                         <input type="hidden" name="page" value="${page}">
-                                        <button type="submit" class="mh-btn mh-btn-secondary mh-btn-sm" title="Bỏ yêu thích">
-                                            Bỏ yêu thích
+                                        <button type="submit" class="mh-btn mh-btn-secondary mh-btn-sm" title="Bỏ yêu thích" style="border-radius: 9999px; display: inline-flex; align-items: center; gap: 6px;">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                            <span>Bỏ yêu thích</span>
                                         </button>
                                     </form>
                                 </div>

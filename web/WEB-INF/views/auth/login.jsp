@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="mh" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -9,14 +10,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
 </head>
 <body>
-    <header class="mh-header">
-        <a href="${pageContext.request.contextPath}/" class="mh-logo">
-            Movie<span>Hub</span>
-        </a>
-        <nav class="mh-nav">
-            <a href="${pageContext.request.contextPath}/register">Đăng ký</a>
-        </nav>
-    </header>
+    <mh:header />
 
     <main class="mh-auth-container">
         <div class="mh-auth-card">
@@ -67,5 +61,7 @@
             </div>
         </div>
     </main>
+
+    <mh:footer />
 </body>
 </html>

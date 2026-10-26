@@ -7,7 +7,10 @@
 <c:url var="publicHomeUrl" value="/" />
 <a class="mh-admin-skip" href="#admin-main">Đến nội dung</a>
 <header class="mh-admin-header">
-    <a class="mh-logo" href="<c:out value='${adminHomeUrl}' />">Movie<span>Hub</span></a>
+    <a class="mh-logo" href="<c:out value='${adminHomeUrl}' />">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="mh-logo-icon" aria-hidden="true" style="width: 20px; height: 20px; color: var(--mh-accent); display: inline-block; vertical-align: -2px; margin-right: 4px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span>Movie<span>Hub</span></span>
+    </a>
     <span class="mh-admin-scope">Quản trị</span>
     <details class="mh-admin-switcher" data-admin-menu>
         <summary aria-controls="admin-navigation">Chuyển mục <span aria-hidden="true">⌄</span></summary>

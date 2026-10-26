@@ -68,7 +68,10 @@
             </div>
 
             <div class="mh-filter-actions">
-                <button type="submit" class="mh-btn mh-btn-primary">Tìm</button>
+                <button type="submit" class="mh-btn mh-btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <span>Tìm kiếm</span>
+                </button>
                 <a href="${ctx}/movies" class="mh-btn mh-btn-secondary">Xóa lọc</a>
             </div>
         </form>
