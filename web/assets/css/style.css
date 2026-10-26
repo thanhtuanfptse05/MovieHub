@@ -426,12 +426,324 @@ a:hover {
   padding: 32px 24px 56px;
 }
 .mh-page-title { font-size: 1.9rem; margin-bottom: 24px; }
+/* ==========================================================================
+   MovieHub Cinema Footer System
+   ========================================================================== */
+.mh-footer-main {
+  position: relative;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 83, 91, 0.06) 0%, transparent 70%), var(--mh-surface-lowest);
+  border-top: 1px solid var(--mh-outline-subtle);
+  color: var(--mh-text-muted);
+  font-size: 0.9rem;
+  margin-top: auto;
+  overflow: hidden;
+}
+
+.mh-footer-glow {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 83, 91, 0.5) 50%, transparent 100%);
+  filter: drop-shadow(0 0 6px rgba(255, 83, 91, 0.6));
+}
+
+.mh-footer-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 56px 24px 28px;
+}
+
+.mh-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.9fr 0.9fr 1.1fr;
+  gap: 48px 32px;
+  padding-bottom: 44px;
+  border-bottom: 1px solid rgba(91, 64, 63, 0.35);
+}
+
+/* Brand column */
+.mh-footer-brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mh-footer-logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-family: var(--mh-font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.mh-footer-logo .mh-logo-accent {
+  color: var(--mh-accent);
+  margin-left: 1px;
+}
+
+.mh-footer-tagline {
+  color: #a6adbb;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  max-width: 360px;
+}
+
+.mh-footer-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.mh-footer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(171, 137, 135, 0.2);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #c7cad9;
+  letter-spacing: 0.02em;
+}
+
+.mh-footer-badge .mh-badge-icon {
+  width: 13px;
+  height: 13px;
+  color: var(--mh-accent-soft);
+  flex-shrink: 0;
+}
+
+/* Column headers & links */
+.mh-footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mh-footer-heading {
+  font-family: var(--mh-font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #fff;
+  position: relative;
+  padding-bottom: 6px;
+}
+
+.mh-footer-heading::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 24px;
+  height: 2px;
+  background: var(--mh-accent);
+  border-radius: 2px;
+}
+
+.mh-footer-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mh-footer-link {
+  color: #a6adbb;
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: var(--mh-transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+}
+
+.mh-footer-link:hover {
+  color: #fff;
+  transform: translateX(4px);
+}
+
+.mh-footer-link:focus-visible {
+  outline: 2px solid var(--mh-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.mh-footer-link-admin {
+  color: #ffd795;
+}
+
+.mh-footer-link-admin:hover {
+  color: #ffe6bd;
+}
+
+.mh-footer-link .mh-link-icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* Status Card */
+.mh-footer-status-card {
+  background: rgba(23, 27, 38, 0.7);
+  border: 1px solid rgba(171, 137, 135, 0.15);
+  border-radius: var(--mh-radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mh-footer-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mh-status-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #78e3a2;
+  box-shadow: 0 0 0 0 rgba(120, 227, 162, 0.7);
+  animation: mhPulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes mhPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(120, 227, 162, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(120, 227, 162, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(120, 227, 162, 0);
+  }
+}
+
+.mh-status-text {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #78e3a2;
+}
+
+.mh-footer-status-desc {
+  font-size: 0.78rem;
+  color: #8b92a5;
+  line-height: 1.4;
+}
+
+.mh-footer-system-meta {
+  display: flex;
+  gap: 8px;
+  margin-top: -4px;
+}
+
+.mh-system-chip {
+  display: inline-block;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(171, 137, 135, 0.12);
+  border-radius: 4px;
+  font-size: 0.72rem;
+  color: #8b92a5;
+  font-family: monospace;
+}
+
+/* Bottom bar */
+.mh-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  font-size: 0.82rem;
+  color: #7e8596;
+}
+
+.mh-footer-copy {
+  margin: 0;
+}
+
+.mh-footer-backtop {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #c7cad9;
+  border: 1px solid rgba(171, 137, 135, 0.25);
+  border-radius: var(--mh-radius-md);
+  padding: 7px 14px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--mh-transition);
+}
+
+.mh-footer-backtop:hover {
+  background: rgba(255, 83, 91, 0.15);
+  border-color: var(--mh-accent);
+  color: #fff;
+}
+
+.mh-footer-backtop:hover .mh-backtop-icon {
+  transform: translateY(-2px);
+}
+
+.mh-backtop-icon {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+/* Retain legacy .mh-footer for backwards compatibility */
 .mh-footer {
   text-align: center;
   padding: 24px;
   color: var(--mh-text-muted);
   font-size: 0.85rem;
   border-top: 1px solid var(--mh-outline-subtle);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .mh-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px 28px;
+  }
+  .mh-footer-brand-col {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .mh-footer-container {
+    padding: 40px 16px 24px;
+  }
+  .mh-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .mh-footer-brand-col {
+    grid-column: span 1;
+  }
+  .mh-footer-bottom {
+    flex-direction: column-reverse;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .mh-footer-backtop {
+    align-self: flex-start;
+  }
 }
 .mh-dot { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--mh-outline); margin: 0 10px; vertical-align: middle; }
 

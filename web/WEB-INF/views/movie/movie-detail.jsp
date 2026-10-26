@@ -661,6 +661,6 @@
         <mh:movieRow sectionId="sec-similar" title="Phim tương tự" items="${similar}" />
     </main>
 
-    <footer class="mh-footer">MovieHub</footer>
+    <mh:footer />
 </body>
 </html>

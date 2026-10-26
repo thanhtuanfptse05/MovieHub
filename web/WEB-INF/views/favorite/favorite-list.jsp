@@ -121,6 +121,6 @@
         </section>
     </main>
 
-    <footer class="mh-footer">MovieHub</footer>
+    <mh:footer />
 </body>
 </html>

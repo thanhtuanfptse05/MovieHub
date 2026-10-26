@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib prefix="mh" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -132,5 +133,7 @@
             </form>
         </div>
     </main>
+
+    <mh:footer />
 </body>
 </html>
