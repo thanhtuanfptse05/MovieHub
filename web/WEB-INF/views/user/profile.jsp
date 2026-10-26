@@ -12,20 +12,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
 </head>
 <body>
-    <header class="mh-header">
-        <a href="${pageContext.request.contextPath}/" class="mh-logo">
-            Movie<span>Hub</span>
-        </a>
-        <nav class="mh-nav">
-            <a href="${pageContext.request.contextPath}/" style="font-size: 0.95rem;">Trang chủ</a>
-            <form action="${pageContext.request.contextPath}/logout" method="POST" style="display: inline; margin: 0;">
-                <input type="hidden" name="csrfToken" value="<c:out value="${csrfToken}" escapeXml="true" />">
-                <button type="submit" class="mh-btn mh-btn-secondary" style="height: 38px; padding: 0 16px; font-size: 0.85rem; cursor: pointer;">
-                    Đăng xuất
-                </button>
-            </form>
-        </nav>
-    </header>
+    <mh:header active="profile" />
 
     <main class="mh-auth-container">
         <div class="mh-profile-card">

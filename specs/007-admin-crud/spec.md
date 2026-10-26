@@ -32,6 +32,12 @@ Given review/question/answer PENDING, When Admin duyệt đúng bản hiện hà
 Given tác giả vừa sửa review, When Admin submit form duyệt cũ, Then 409, không approve nội dung mới chưa đọc.
 Given hai Admin cùng approve một phiên bản nội dung, Then một quyết định ghi audit, request còn lại no-op; không đổi người/giờ duyệt sang người đến sau.
 
+### ADM-US-05: truy cập Dashboard từ giao diện công khai (P0)
+
+Là Admin khi duyệt trang công khai (Trang chủ, Danh sách phim, Chi tiết,...), tôi muốn có liên kết/nút bấm rõ ràng trên thanh điều hướng header để chuyển nhanh vào Admin Dashboard.
+Given Admin ACTIVE đã đăng nhập, When xem bất kỳ trang công khai nào, Then header hiển thị nút "Quản trị" trỏ tới /admin/dashboard.
+Given Guest hoặc User không phải Admin, Then header không hiển thị nút "Quản trị".
+
 ### Edge Cases
 
 Guest/non-admin direct POST; mass assignment viewCount/id/moderator; slug unique race; category deleted giữa form/commit; stale phim/profile/user; xóa category có phim ẩn; tự khóa/tự hạ role; admin cuối INACTIVE; chéo hai admin; duyệt answer cha ẩn; review đã bỏ; hai mục cùng id nhưng khác type; DB lỗi giữa lưu phim và quan hệ.
@@ -87,6 +93,7 @@ Ghi log an toàn actor ID,action,type/id,status cũ/mới,timestamp cho thay đ�
 - ADM-AC-13 (Unwanted): IF version/contentRevision stale không đủ no-op THEN THE system SHALL 409, không approve nội dung chưa đọc.
 - ADM-AC-14 (Event-driven): WHEN reject question APPROVED THE system SHALL ẩn thread public nhưng giữ nguyên status và FK answers.
 - ADM-AC-15 (Ubiquitous): THE system SHALL xác nhận thao tác ẩn/khóa/hạ role tại UI, vẫn kiểm tra CSRF/role/version trên server.
+- ADM-AC-16 (State-driven): WHILE người dùng có vai trò ADMIN đã đăng nhập THE system SHALL hiển thị liên kết/nút bấm trực tiếp tới /admin/dashboard trên thanh điều hướng header của tất cả các trang công khai.
 
 ### Hợp đồng giao tiếp
 

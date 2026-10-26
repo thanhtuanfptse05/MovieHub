@@ -174,7 +174,7 @@ public class MovieService {
         Object[] rating = movieDAO.findRatingSummary(id);
         return new MovieDetail(movie.getId(), movie.getTitle(), movie.getDescription(), movie.getReleaseYear(),
                 movie.getDurationMinutes(), MediaUrlUtil.safeImageUrl(movie.getPosterUrl()),
-                MediaUrlUtil.safeMp4Url(movie.getVideoUrl()), MediaUrlUtil.safeMp4Url(movie.getTrailerUrl()),
+                movie.getVideoUrl(), movie.getTrailerUrl(),
                 movie.getViewCount(), (Double) rating[0], (Long) rating[1],
                 movieDAO.findActiveCategories(id));
     }

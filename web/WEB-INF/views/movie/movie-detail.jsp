@@ -28,20 +28,117 @@
             <div class="mh-detail-media">
                 <c:choose>
                     <c:when test="${movie.hasMedia}">
-                        <video id="mh-player" class="mh-player" controls preload="metadata" playsinline
-                               poster="<c:out value="${movie.posterUrl}" escapeXml="true" />"
-                               src="<c:out value="${movie.primaryMediaUrl}" escapeXml="true" />"
-                               data-fallback="<c:out value="${movie.fallbackMediaUrl}" escapeXml="true" />"
-                               data-error-notice="Không phát được video chính. Bạn có thể chuyển sang trailer."
-                               data-error-fallback="Không phát được video này trên trình duyệt của bạn.">
-                            Trình duyệt của bạn không hỗ trợ phát video.
-                        </video>
-                        <div class="mh-player-bar">
-                            <p id="mh-player-notice" class="mh-player-notice" role="status" hidden></p>
-                            <button type="button" id="mh-switch-trailer" class="mh-btn mh-btn-secondary mh-btn-sm" hidden>
-                                Chuyển sang trailer
-                            </button>
+                        <div class="mh-player-container" id="mh-player-container">
+                            <c:choose>
+                                <c:when test="${not empty currentEpisode and currentEpisode.youtube}">
+                                    <div class="mh-player-frame-wrapper" id="mh-frame-wrapper">
+                                        <iframe id="mh-youtube-player" class="mh-youtube-player"
+                                                src="<c:out value="${currentEpisode.playUrl}" escapeXml="true" />"
+                                                title="<c:out value="${movie.title}" escapeXml="true" /> - <c:out value="${currentEpisode.title}" escapeXml="true" />"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                    <video id="mh-player" class="mh-player" controls preload="metadata" playsinline hidden
+                                           poster="<c:out value="${movie.posterUrl}" escapeXml="true" />">
+                                        Trình duyệt của bạn không hỗ trợ phát video.
+                                    </video>
+                                </c:when>
+                                <c:when test="${not empty currentEpisode}">
+                                    <div class="mh-player-frame-wrapper" id="mh-frame-wrapper" hidden>
+                                        <iframe id="mh-youtube-player" class="mh-youtube-player"
+                                                src=""
+                                                title="<c:out value="${movie.title}" escapeXml="true" />"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                    <video id="mh-player" class="mh-player" controls preload="metadata" playsinline
+                                           poster="<c:out value="${movie.posterUrl}" escapeXml="true" />"
+                                           src="<c:out value="${currentEpisode.playUrl}" escapeXml="true" />"
+                                           data-fallback="<c:out value="${movie.fallbackMediaUrl}" escapeXml="true" />">
+                                        Trình duyệt của bạn không hỗ trợ phát video.
+                                    </video>
+                                </c:when>
+                                <c:when test="${movie.hasTrailer and movie.trailerYouTube}">
+                                    <div class="mh-player-frame-wrapper" id="mh-frame-wrapper">
+                                        <iframe id="mh-youtube-player" class="mh-youtube-player"
+                                                src="<c:out value="${movie.trailerPlayUrl}" escapeXml="true" />"
+                                                title="<c:out value="${movie.title}" escapeXml="true" /> - Trailer"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                    <video id="mh-player" class="mh-player" controls preload="metadata" playsinline hidden
+                                           poster="<c:out value="${movie.posterUrl}" escapeXml="true" />">
+                                        Trình duyệt của bạn không hỗ trợ phát video.
+                                    </video>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="mh-player-frame-wrapper" id="mh-frame-wrapper" hidden>
+                                        <iframe id="mh-youtube-player" class="mh-youtube-player"
+                                                src=""
+                                                title="<c:out value="${movie.title}" escapeXml="true" />"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                    <video id="mh-player" class="mh-player" controls preload="metadata" playsinline
+                                           poster="<c:out value="${movie.posterUrl}" escapeXml="true" />"
+                                           src="<c:out value="${movie.trailerPlayUrl}" escapeXml="true" />">
+                                        Trình duyệt của bạn không hỗ trợ phát video.
+                                    </video>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <div class="mh-player-toolbar">
+                                <div class="mh-player-toolbar-left">
+                                    <c:if test="${not empty currentEpisode}">
+                                        <span class="mh-now-playing-badge" id="mh-now-playing-badge">
+                                            <span class="mh-pulse-dot" aria-hidden="true"></span>
+                                            Đang phát: <strong id="mh-current-ep-title"><c:out value="${currentEpisode.title}" /></strong>
+                                        </span>
+                                    </c:if>
+                                </div>
+                                <div class="mh-player-toolbar-right">
+                                    <c:if test="${movie.hasTrailer and not empty currentEpisode}">
+                                        <button type="button" id="mh-btn-play-movie" class="mh-btn mh-btn-secondary mh-btn-xs is-active"
+                                                data-url="<c:out value="${currentEpisode.playUrl}" escapeXml="true" />"
+                                                data-is-youtube="${currentEpisode.youtube}">
+                                            ▶ Xem phim
+                                        </button>
+                                        <button type="button" id="mh-btn-play-trailer" class="mh-btn mh-btn-secondary mh-btn-xs"
+                                                data-trailer-url="<c:out value="${movie.trailerPlayUrl}" escapeXml="true" />"
+                                                data-is-youtube="${movie.trailerYouTube}">
+                                            🎬 Xem trailer
+                                        </button>
+                                    </c:if>
+                                </div>
+                            </div>
                         </div>
+
+                        <c:if test="${movie.multiEpisode}">
+                            <div class="mh-episodes-panel">
+                                <div class="mh-episodes-header">
+                                    <span class="mh-episodes-title">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mh-ep-icon" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+                                        Danh sách tập (${movie.episodeCount} tập)
+                                    </span>
+                                </div>
+                                <div class="mh-episodes-grid" role="tablist" aria-label="Chọn tập phim">
+                                    <c:forEach var="ep" items="${movie.episodes}">
+                                        <a href="${ctx}/movies/detail?id=${movie.id}&amp;ep=${ep.number}"
+                                           class="mh-ep-chip ${ep.number == currentEpisode.number ? 'is-active' : ''}"
+                                           data-ep-number="${ep.number}"
+                                           data-ep-title="<c:out value="${ep.title}" escapeXml="true" />"
+                                           data-ep-url="<c:out value="${ep.playUrl}" escapeXml="true" />"
+                                           data-is-youtube="${ep.youtube}">
+                                            <c:out value="${ep.title}" />
+                                        </a>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </c:if>
                     </c:when>
                     <c:otherwise>
                         <div class="mh-player mh-player-empty" role="status">

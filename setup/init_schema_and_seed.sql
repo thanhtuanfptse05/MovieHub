@@ -29,8 +29,8 @@ BEGIN
         release_year INT NOT NULL,
         duration_minutes INT NOT NULL,
         poster_url VARCHAR(1000) NULL,
-        video_url VARCHAR(1000) NULL,
-        trailer_url VARCHAR(1000) NULL,
+        video_url NVARCHAR(MAX) NULL,
+        trailer_url NVARCHAR(MAX) NULL,
         status VARCHAR(20) NOT NULL DEFAULT 'DRAFT', -- DRAFT, PUBLISHED, HIDDEN
         featured BIT NOT NULL DEFAULT 0,
         view_count BIGINT NOT NULL DEFAULT 0,
@@ -194,8 +194,8 @@ DECLARE @movies TABLE (
     release_year INT,
     duration_minutes INT,
     poster_url VARCHAR(1000) COLLATE DATABASE_DEFAULT,
-    video_url VARCHAR(1000) COLLATE DATABASE_DEFAULT,
-    trailer_url VARCHAR(1000) COLLATE DATABASE_DEFAULT,
+    video_url NVARCHAR(MAX) COLLATE DATABASE_DEFAULT,
+    trailer_url NVARCHAR(MAX) COLLATE DATABASE_DEFAULT,
     status VARCHAR(20) COLLATE DATABASE_DEFAULT,
     featured BIT,
     view_count BIGINT

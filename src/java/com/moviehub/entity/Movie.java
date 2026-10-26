@@ -51,10 +51,10 @@ public class Movie implements Serializable {
     @Column(name = "poster_url", length = 1000)
     private String posterUrl;
 
-    @Column(name = "video_url", length = 1000)
+    @Column(name = "video_url", columnDefinition = "NVARCHAR(MAX)")
     private String videoUrl;
 
-    @Column(name = "trailer_url", length = 1000)
+    @Column(name = "trailer_url", columnDefinition = "NVARCHAR(MAX)")
     private String trailerUrl;
 
     @Column(name = "status", nullable = false, length = 20)

@@ -1,14 +1,17 @@
 package com.moviehub.dto;
 
+import com.moviehub.util.MediaUrlUtil;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * Read model for the public movie detail page.
+ * Read model for the public movie detail page, supporting direct playback,
+ * YouTube embeds, and multi-episode series.
  */
 public class MovieDetail implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     private final Long id;
     private final String title;
@@ -23,6 +26,9 @@ public class MovieDetail implements Serializable {
     private final long reviewCount;
     private final List<String> categoryNames;
     private final List<CategoryOption> categories;
+    private final List<EpisodeItem> episodes;
+    private final String trailerPlayUrl;
+    private final boolean trailerYouTube;
 
     public MovieDetail(Long id, String title, String description, Integer releaseYear, Integer durationMinutes,
                        String posterUrl, String videoUrl, String trailerUrl, Long viewCount,
@@ -38,11 +44,15 @@ public class MovieDetail implements Serializable {
         this.viewCount = viewCount;
         this.averageRating = reviewCount > 0 ? averageRating : null;
         this.reviewCount = reviewCount;
-        this.categories = categories;
+        this.categories = categories != null ? categories : Collections.emptyList();
         this.categoryNames = new java.util.ArrayList<>();
-        for (CategoryOption c : categories) {
+        for (CategoryOption c : this.categories) {
             categoryNames.add(c.getName());
         }
+
+        this.episodes = MediaUrlUtil.parseEpisodes(videoUrl);
+        this.trailerPlayUrl = MediaUrlUtil.safePlayUrl(trailerUrl);
+        this.trailerYouTube = MediaUrlUtil.isYouTubeUrl(trailerUrl);
     }
 
     public Long getId() {
@@ -69,12 +79,10 @@ public class MovieDetail implements Serializable {
         return posterUrl;
     }
 
-    /** MP4 URL for the main video, or null when absent/not MP4. */
     public String getVideoUrl() {
         return videoUrl;
     }
 
-    /** MP4 URL for the trailer, or null when absent/not MP4. */
     public String getTrailerUrl() {
         return trailerUrl;
     }
@@ -107,17 +115,63 @@ public class MovieDetail implements Serializable {
         return categoryNames;
     }
 
-    /** Main source: video, else trailer. */
-    public String getPrimaryMediaUrl() {
-        return videoUrl != null ? videoUrl : trailerUrl;
+    public List<EpisodeItem> getEpisodes() {
+        return episodes;
     }
 
-    /** Fallback source offered only when the primary is the video and a trailer also exists. */
+    public boolean isMultiEpisode() {
+        return episodes.size() > 1;
+    }
+
+    public int getEpisodeCount() {
+        return episodes.size();
+    }
+
+    public EpisodeItem getDefaultEpisode() {
+        return episodes.isEmpty() ? null : episodes.get(0);
+    }
+
+    public EpisodeItem getEpisodeByNumber(Integer epNumber) {
+        if (episodes.isEmpty()) {
+            return null;
+        }
+        if (epNumber == null || epNumber <= 0 || epNumber > episodes.size()) {
+            return episodes.get(0);
+        }
+        return episodes.get(epNumber - 1);
+    }
+
+    public String getTrailerPlayUrl() {
+        return trailerPlayUrl;
+    }
+
+    public boolean isTrailerYouTube() {
+        return trailerYouTube;
+    }
+
+    public boolean isHasTrailer() {
+        return trailerPlayUrl != null && !trailerPlayUrl.isEmpty();
+    }
+
+    /** Main source: default episode play URL, else trailer play URL. */
+    public String getPrimaryMediaUrl() {
+        EpisodeItem def = getDefaultEpisode();
+        if (def != null) {
+            return def.getPlayUrl();
+        }
+        return trailerPlayUrl;
+    }
+
+    /** Fallback source: trailer play URL if different from primary. */
     public String getFallbackMediaUrl() {
-        return videoUrl != null ? trailerUrl : null;
+        EpisodeItem def = getDefaultEpisode();
+        if (def != null && isHasTrailer()) {
+            return trailerPlayUrl;
+        }
+        return null;
     }
 
     public boolean isHasMedia() {
-        return getPrimaryMediaUrl() != null;
+        return !episodes.isEmpty() || isHasTrailer();
     }
 }

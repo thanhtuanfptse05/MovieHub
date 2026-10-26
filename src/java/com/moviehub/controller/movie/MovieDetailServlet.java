@@ -123,7 +123,11 @@ public class MovieDetailServlet extends HttpServlet {
                 }
             }
 
+            int ep = parseInt(request.getParameter("ep"), 1);
+            com.moviehub.dto.EpisodeItem currentEpisode = detail.getEpisodeByNumber(ep);
+
             request.setAttribute("movie", detail);
+            request.setAttribute("currentEpisode", currentEpisode);
             request.setAttribute("isFavorited", isFavorited);
             request.setAttribute("similar", movieService.getSimilar(id));
             request.setAttribute("reviewsPage", reviewsPage);

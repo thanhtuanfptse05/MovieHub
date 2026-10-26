@@ -1724,4 +1724,219 @@ select.mh-input { appearance: auto; padding: 0 12px; }
   }
 }
 
+/* ==========================================================================
+   MovieHub Player, YouTube Embed & Multi-Episode Series System
+   ========================================================================== */
+.mh-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 40px;
+  margin-bottom: 48px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .mh-detail {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+.mh-detail-media {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mh-player-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.mh-player-frame-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--mh-radius-lg);
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--mh-outline-subtle);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+}
+
+.mh-youtube-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.mh-player {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--mh-radius-lg);
+  background: #000;
+  border: 1px solid var(--mh-outline-subtle);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+  display: block;
+}
+
+.mh-player[hidden], .mh-player-frame-wrapper[hidden] {
+  display: none !important;
+}
+
+.mh-player-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 40px 20px;
+  color: var(--mh-text-muted);
+  text-align: center;
+  background: var(--mh-surface-low);
+  border-radius: var(--mh-radius-lg);
+  border: 1px solid var(--mh-outline-subtle);
+}
+
+.mh-player-empty img {
+  max-width: 160px;
+  height: auto;
+  opacity: 0.6;
+}
+
+.mh-player-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(23, 27, 38, 0.6);
+  border: 1px solid rgba(171, 137, 135, 0.15);
+  border-radius: var(--mh-radius-md);
+}
+
+.mh-now-playing-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #c7cad9;
+}
+
+.mh-now-playing-badge strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.mh-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mh-accent);
+  box-shadow: 0 0 0 0 rgba(255, 83, 91, 0.7);
+  animation: mhDotPulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes mhDotPulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 83, 91, 0.7); }
+  70% { box-shadow: 0 0 0 6px rgba(255, 83, 91, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 83, 91, 0); }
+}
+
+.mh-player-toolbar-right {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.mh-btn-xs {
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  height: 28px;
+  border-radius: var(--mh-radius-sm);
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--mh-transition);
+}
+
+.mh-btn-xs.is-active {
+  background: var(--mh-accent);
+  color: #fff;
+  border-color: var(--mh-accent);
+}
+
+/* Episodes panel */
+.mh-episodes-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  background: rgba(23, 27, 38, 0.8);
+  border: 1px solid rgba(171, 137, 135, 0.2);
+  border-radius: var(--mh-radius-lg);
+}
+
+.mh-episodes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mh-episodes-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.mh-ep-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--mh-accent);
+}
+
+.mh-episodes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mh-ep-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 68px;
+  padding: 8px 14px;
+  background: var(--mh-surface-high);
+  color: #dfe2f1;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: var(--mh-radius-sm);
+  border: 1px solid rgba(171, 137, 135, 0.2);
+  transition: var(--mh-transition);
+  cursor: pointer;
+}
+
+.mh-ep-chip:hover {
+  background: var(--mh-surface-highest);
+  border-color: var(--mh-accent-hover);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.mh-ep-chip.is-active {
+  background: var(--mh-accent);
+  color: #fff;
+  border-color: var(--mh-accent);
+  box-shadow: 0 4px 14px rgba(255, 83, 91, 0.35);
+}
+
 
