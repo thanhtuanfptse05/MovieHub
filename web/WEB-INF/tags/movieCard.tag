@@ -20,6 +20,11 @@
                          alt="Chưa có poster cho phim <c:out value="${card.title}" escapeXml="true" />" loading="lazy">
                 </c:otherwise>
             </c:choose>
+            <div class="mh-card-play-overlay" aria-hidden="true">
+                <span class="mh-card-play-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                </span>
+            </div>
             <span class="mh-card-rating${card.rated ? '' : ' is-empty'}">
                 <c:choose>
                     <c:when test="${card.rated}">★ <c:out value="${card.ratingText}" /></c:when>
