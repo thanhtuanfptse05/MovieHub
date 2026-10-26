@@ -1,16 +1,70 @@
-> SPEC-REVISION-NOTICE (2026-10-25): Scaffold cũ, chưa đồng bộ với spec.md v1.0.0. Giữ để tham khảo lịch sử; KHÔNG dùng để triển khai hoặc xác nhận nghiệm thu. Sau khi duyệt spec/GOV, tạo lại artifact này và chạy speckit-analyze. Xem [overview](../overview.md) và [decisions](../shared/decisions.md).
-
 # Implementation Plan: 008-admin-analytics
-<!-- Architecture & Engineering Plan -->
+<!-- Architecture & Engineering Plan conforming to Spec 008-admin-analytics v1.0.0 -->
 
 ## 1. Architectural Layers & File Map
-- **DAOs**: `com.moviehub.dao.AnalyticsDAO` (`getSummaryCounts`, `getTopViewedMovies`, `getTopRatedMovies`)
-- **Services**: `com.moviehub.service.AnalyticsService`
+- **DTOs**:
+  - `com.moviehub.dto.AdminDashboardDTO`:
+    - `totalMovies`: `long` (KPI-01)
+    - `publishedMovies`: `long` (KPI-02)
+    - `totalUsers`: `long` (KPI-03, role USER only)
+    - `totalReviews`: `long` (KPI-04, non-deleted reviews)
+    - `totalViews`: `long` (KPI-05, sum of view_count)
+    - `maxViews`: `Long` (KPI-06, null if no movies -> UI displays "N/A")
+    - `minViews`: `Long` (KPI-06, null if no movies -> UI displays "N/A")
+    - `averageRating`: `Double` (KPI-07, avg of approved reviews, null if none -> UI displays "N/A")
+    - `pendingReviews`: `long` (KPI-08)
+    - `pendingQuestions`: `long` (KPI-08)
+    - `pendingAnswers`: `long` (KPI-08)
+    - `totalPending`: `long` (KPI-08 total)
+    - `topMovies`: `List<TopMovieDTO>` (KPI-09, top 5 movies by viewCount DESC, id DESC)
+    - `categoryStats`: `List<CategoryStatDTO>` (P1 FR-26, distinct published movie count per category)
+  - `com.moviehub.dto.TopMovieDTO`:
+    - `id`, `title`, `releaseYear`, `status`, `viewCount`
+  - `com.moviehub.dto.CategoryStatDTO`:
+    - `categoryId`, `name`, `movieCount`
+- **DAOs**:
+  - `com.moviehub.dao.AnalyticsDAO`:
+    - JPQL queries for single-pass aggregated calculations without duplicating rows:
+      - `countTotalMovies()`
+      - `countPublishedMovies()`
+      - `countTotalUsers()`
+      - `countTotalReviews()`
+      - `sumTotalViews()`
+      - `findMaxViews()`
+      - `findMinViews()`
+      - `findAverageApprovedRating()`
+      - `countPendingReviews()`, `countPendingQuestions()`, `countPendingAnswers()`
+      - `findTop5ViewedMovies()`
+      - `findCategoryStats()`
+- **Services**:
+  - `com.moviehub.service.AnalyticsService`:
+    - `getDashboardData()`: executes atomic read snapshot, computes formatted metrics, handles empty states (0, N/A), sorts top movies and category stats.
 - **Controllers (Servlets)**:
-  - `com.moviehub.controller.admin.AdminDashboardServlet` (`/admin/dashboard`)
-- **Views (JSP + JSTL)**:
-  - `web/WEB-INF/views/admin/dashboard.jsp`
+  - `com.moviehub.controller.admin.AdminDashboardServlet` (`/admin/dashboard` and `/admin` redirect)
+    - Verifies Admin ACTIVE role via `AdminAuthFilter`
+    - Binds `AdminDashboardDTO` to request attribute `dashboard`
+    - Forwards to `/WEB-INF/views/admin/dashboard.jsp`
+- **Views (Pure JSTL + CSS)**:
+  - `web/WEB-INF/views/admin/dashboard.jsp`:
+    - Responsive KPI statistic cards (KPI-01 to KPI-08)
+    - Top 5 viewed movies table (KPI-09) with status badge and admin edit links
+    - Category breakdown table/cards (P1 FR-26) with note explaining multi-category overlap
+    - Clean empty states ("N/A", "0", "Chưa có phim nào")
+  - `web/assets/css/style.css` / admin styles:
+    - Elegant dashboard cards, status chips, grid layout
 
 ## 2. Verification Strategy
-- Unit tests: `AnalyticsServiceTest.java`.
-- Web tests: Verify dashboard counter cards, chart/table data rendering with JSTL.
+- **Unit Tests**:
+  - `AnalyticsServiceTest.java`:
+    - Normal data calculation (KPI-01 to KPI-09, P1 category stats)
+    - Empty dataset (all counts 0, max/min/avg N/A, top empty)
+    - Single movie, tie-breaking by id DESC
+    - Non-published and hidden movies view sum & count
+    - Role USER vs ADMIN filter in user count
+    - Deleted review exclusion
+- **Integration & E2E Tests**:
+  - `test_e2e_analytics.py`:
+    - Guest / regular user blocked (303 to login, 403 forbidden)
+    - Admin login access to `/admin/dashboard`
+    - Verify all KPI figures match SQL Server database state
+    - Zero mojibake verification

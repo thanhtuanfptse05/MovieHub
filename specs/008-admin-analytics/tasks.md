@@ -1,18 +1,24 @@
-> SPEC-REVISION-NOTICE (2026-10-25): Scaffold cũ, chưa đồng bộ với spec.md v1.0.0. Giữ để tham khảo lịch sử; KHÔNG dùng để triển khai hoặc xác nhận nghiệm thu. Sau khi duyệt spec/GOV, tạo lại artifact này và chạy speckit-analyze. Xem [overview](../overview.md) và [decisions](../shared/decisions.md).
-
 # Tasks Breakdown: 008-admin-analytics
 <!-- Actionable, Dependency-Ordered Task List -->
 
-- [ ] **Task 1: AnalyticsDAO**
-  - Implement aggregated JPQL queries for metrics and top movie lists.
-- [ ] **Task 2: AnalyticsService (TDD)**
-  - Write unit tests in `AnalyticsServiceTest.java`.
-  - Implement `AnalyticsService.java`.
-- [ ] **Task 3: AdminDashboardServlet**
-  - Implement `/admin/dashboard` controller binding metrics to request attributes.
-- [ ] **Task 4: Views (Pure JSTL)**
-  - Implement `dashboard.jsp` with responsive statistic cards and top tables using `<c:forEach>`.
-- [ ] **Task 5: Verification & Delivery**
-  - Pass 15-item validation gate.
-  - Commit `feat(analytics): implement admin executive dashboard and reports`.
-  - Push branch `feat/008-admin-analytics` to GitHub.
+- [x] **Task 1: DTO Models**
+  - Implement `AdminDashboardDTO.java`, `TopMovieDTO.java`, `CategoryStatDTO.java` under `com.moviehub.dto`.
+- [x] **Task 2: AnalyticsDAO**
+  - Implement `AnalyticsDAO.java` with JPQL aggregate queries adhering to KPI-01 through KPI-09 and P1 category counts.
+- [x] **Task 3: AnalyticsService (TDD)**
+  - Write comprehensive unit tests in `test/com/moviehub/service/AnalyticsServiceTest.java`.
+  - Implement `AnalyticsService.java` handling data formatting, empty states, and error propagation.
+  - Verify all unit tests pass with `ant test`.
+- [x] **Task 4: AdminDashboardServlet & Web Configuration**
+  - Implement `AdminDashboardServlet.java` (`/admin/dashboard`).
+  - Configure servlet mappings in `web.xml` (including `/admin` redirecting to `/admin/dashboard`).
+- [x] **Task 5: Admin Dashboard View (Pure JSTL)**
+  - Create `/WEB-INF/views/admin/dashboard.jsp` with cinema-grade styling, KPI stat cards, top 5 movies table, category distribution, and clear empty states.
+  - Ensure 100% pure JSTL/EL, zero scriptlets, proper escaping.
+- [x] **Task 6: E2E Verification & Anti-Mojibake Gate**
+  - Run `test_e2e_analytics.py` verifying authorization guards, KPI accuracy, and anti-mojibake checks.
+  - Run full suite `ant test` to ensure zero regressions across all 7 test suites.
+- [x] **Task 7: Delivery & Commit**
+  - Check 15-item validation gate.
+  - Git commit conforming to conventional commits: `feat(analytics): implement admin dashboard and KPI analytics`.
+  - Push branch `feat/008-admin-analytics` to remote repository.
