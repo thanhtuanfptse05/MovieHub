@@ -17,6 +17,21 @@
   var btnPlayMovie = document.getElementById('mh-btn-play-movie');
   var btnPlayTrailer = document.getElementById('mh-btn-play-trailer');
 
+  function toEmbedUrl(url) {
+    if (!url) {
+      return '';
+    }
+    var trimmed = url.trim();
+    if (trimmed.indexOf('/embed/') !== -1) {
+      return trimmed;
+    }
+    var m = trimmed.match(/(?:youtube\.com\/watch\?(?:.*&)?v=|youtu\.be\/|youtube\.com\/shorts\/|youtube\.com\/live\/|youtube\.com\/v\/)([a-zA-Z0-9_-]{11})/i);
+    if (m && m[1]) {
+      return 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1&rel=0';
+    }
+    return trimmed;
+  }
+
   function setMediaSource(url, isYouTube, title) {
     if (!url) {
       return;
@@ -27,7 +42,7 @@
         videoPlayer.hidden = true;
       }
       if (youtubePlayer && frameWrapper) {
-        youtubePlayer.src = url;
+        youtubePlayer.src = toEmbedUrl(url);
         frameWrapper.hidden = false;
       }
     } else {
@@ -91,7 +106,9 @@
       var isYt = btnPlayMovie.getAttribute('data-is-youtube') === 'true';
       btnPlayMovie.classList.add('is-active');
       btnPlayTrailer.classList.remove('is-active');
-      setMediaSource(url, isYt, null);
+      var activeChip = document.querySelector('.mh-ep-chip.is-active');
+      var epTitle = activeChip ? activeChip.getAttribute('data-ep-title') : null;
+      setMediaSource(url, isYt, epTitle);
     });
 
     btnPlayTrailer.addEventListener('click', function () {

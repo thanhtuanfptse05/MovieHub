@@ -3,6 +3,7 @@ package com.moviehub.service;
 import com.moviehub.dao.CategoryDAO;
 import com.moviehub.dao.MovieDAO;
 import com.moviehub.dto.CatalogQuery;
+import com.moviehub.dto.EpisodeItem;
 import com.moviehub.dto.MovieCard;
 import com.moviehub.dto.PageResult;
 import com.moviehub.util.MediaUrlUtil;
@@ -204,6 +205,37 @@ public class MovieServiceTest {
         assertNull(MediaUrlUtil.safeImageUrl("data:image/png;base64,AAAA"));
         assertNull(MediaUrlUtil.safeImageUrl("javascript:alert(1)"));
         assertNull(MediaUrlUtil.safeImageUrl(null));
+    }
+
+    @Test
+    public void youtubeUrls_ExtractedAndConvertedToEmbed() {
+        assertEquals("UKFMYWNatQM", MediaUrlUtil.extractYouTubeId("https://www.youtube.com/watch?v=UKFMYWNatQM"));
+        assertEquals("UKFMYWNatQM", MediaUrlUtil.extractYouTubeId("https://www.youtube.com/watch?feature=shared&v=UKFMYWNatQM&t=10s"));
+        assertEquals("UKFMYWNatQM", MediaUrlUtil.extractYouTubeId("https://youtu.be/UKFMYWNatQM"));
+        assertEquals("UKFMYWNatQM", MediaUrlUtil.extractYouTubeId("https://www.youtube.com/embed/UKFMYWNatQM"));
+        assertEquals("UKFMYWNatQM", MediaUrlUtil.extractYouTubeId("https://www.youtube-nocookie.com/embed/UKFMYWNatQM"));
+        assertEquals("UKFMYWNatQM", MediaUrlUtil.extractYouTubeId("https://www.youtube.com/shorts/UKFMYWNatQM"));
+        assertNull(MediaUrlUtil.extractYouTubeId("https://x.test/watch?v=UKFMYWNatQM"));
+        assertNull(MediaUrlUtil.extractYouTubeId(""));
+        assertNull(MediaUrlUtil.extractYouTubeId(null));
+
+        assertEquals("https://www.youtube.com/embed/UKFMYWNatQM?autoplay=1&rel=0",
+                MediaUrlUtil.safePlayUrl("https://www.youtube.com/watch?v=UKFMYWNatQM"));
+        assertTrue(MediaUrlUtil.isYouTubeUrl("https://www.youtube.com/watch?v=UKFMYWNatQM"));
+    }
+
+    @Test
+    public void parseEpisodes_MultiEpisodeFormattedCorrectly() {
+        String raw = "Tập 1: Mở đầu | https://www.youtube.com/watch?v=UKFMYWNatQM||Tập 2: Cao trào | https://youtu.be/YXZlbluG9-o";
+        List<EpisodeItem> episodes = MediaUrlUtil.parseEpisodes(raw);
+        assertEquals(2, episodes.size());
+        assertEquals("Tập 1: Mở đầu", episodes.get(0).getTitle());
+        assertTrue(episodes.get(0).isYoutube());
+        assertEquals("https://www.youtube.com/embed/UKFMYWNatQM?autoplay=1&rel=0", episodes.get(0).getPlayUrl());
+
+        assertEquals("Tập 2: Cao trào", episodes.get(1).getTitle());
+        assertTrue(episodes.get(1).isYoutube());
+        assertEquals("https://www.youtube.com/embed/YXZlbluG9-o?autoplay=1&rel=0", episodes.get(1).getPlayUrl());
     }
 
     // ---- rating presentation ----------------------------------------------------------

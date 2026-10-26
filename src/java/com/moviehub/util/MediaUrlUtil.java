@@ -17,13 +17,15 @@ public final class MediaUrlUtil {
     private static final int MAX_SINGLE_URL_LENGTH = 2000;
 
     private static final Pattern YOUTUBE_WATCH_PATTERN =
-            Pattern.compile("(?:https?://)?(?:www\\.|m\\.)?youtube\\.com/watch\\?.*?[?&]v=([a-zA-Z0-9_-]{11})", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("(?:https?://)?(?:www\\.|m\\.)?youtube\\.com/watch\\?(?:.*&)?v=([a-zA-Z0-9_-]{11})", Pattern.CASE_INSENSITIVE);
     private static final Pattern YOUTUBE_SHORT_PATTERN =
             Pattern.compile("(?:https?://)?(?:www\\.)?youtu\\.be/([a-zA-Z0-9_-]{11})", Pattern.CASE_INSENSITIVE);
     private static final Pattern YOUTUBE_EMBED_PATTERN =
-            Pattern.compile("(?:https?://)?(?:www\\.)?youtube\\.com/embed/([a-zA-Z0-9_-]{11})", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("(?:https?://)?(?:www\\.)?(?:youtube\\.com|youtube-nocookie\\.com)/embed/([a-zA-Z0-9_-]{11})", Pattern.CASE_INSENSITIVE);
     private static final Pattern YOUTUBE_SHORTS_PATTERN =
             Pattern.compile("(?:https?://)?(?:www\\.)?youtube\\.com/shorts/([a-zA-Z0-9_-]{11})", Pattern.CASE_INSENSITIVE);
+    private static final Pattern YOUTUBE_LIVE_PATTERN =
+            Pattern.compile("(?:https?://)?(?:www\\.|m\\.)?youtube\\.com/(?:v|live)/([a-zA-Z0-9_-]{11})", Pattern.CASE_INSENSITIVE);
 
     private static final Pattern EPISODE_LINE_PATTERN =
             Pattern.compile("^(.*?)\\s*[:|\\-]\\s*(https?://.+)$", Pattern.CASE_INSENSITIVE);
@@ -68,6 +70,10 @@ public final class MediaUrlUtil {
             return m.group(1);
         }
         m = YOUTUBE_SHORTS_PATTERN.matcher(trimmed);
+        if (m.find()) {
+            return m.group(1);
+        }
+        m = YOUTUBE_LIVE_PATTERN.matcher(trimmed);
         if (m.find()) {
             return m.group(1);
         }
