@@ -30,7 +30,7 @@
                     <c:when test="${movie.hasMedia}">
                         <div class="mh-player-container" id="mh-player-container">
                             <c:choose>
-                                <c:when test="${not empty currentEpisode and currentEpisode.youtube}">
+                                <c:when test="${not empty currentEpisode and (currentEpisode.youtube or fn:contains(currentEpisode.playUrl, 'youtube.com') or fn:contains(currentEpisode.playUrl, 'youtu.be'))}">
                                     <div class="mh-player-frame-wrapper" id="mh-frame-wrapper">
                                         <iframe id="mh-youtube-player" class="mh-youtube-player"
                                                 src="<c:out value="${currentEpisode.playUrl}" escapeXml="true" />"
@@ -60,7 +60,7 @@
                                         Trình duyệt của bạn không hỗ trợ phát video.
                                     </video>
                                 </c:when>
-                                <c:when test="${movie.hasTrailer and movie.trailerYouTube}">
+                                <c:when test="${movie.hasTrailer and (movie.trailerYouTube or fn:contains(movie.trailerPlayUrl, 'youtube.com') or fn:contains(movie.trailerPlayUrl, 'youtu.be'))}">
                                     <div class="mh-player-frame-wrapper" id="mh-frame-wrapper">
                                         <iframe id="mh-youtube-player" class="mh-youtube-player"
                                                 src="<c:out value="${movie.trailerPlayUrl}" escapeXml="true" />"
@@ -105,13 +105,13 @@
                                         <div class="mh-cinema-switcher" role="radiogroup" aria-label="Chế độ phát">
                                             <button type="button" id="mh-btn-play-movie" class="mh-switcher-tab is-active"
                                                     data-url="<c:out value="${currentEpisode.playUrl}" escapeXml="true" />"
-                                                    data-is-youtube="${currentEpisode.youtube}" role="radio" aria-checked="true">
+                                                    data-is-youtube="${currentEpisode.youtube or fn:contains(currentEpisode.playUrl, 'youtube.com') or fn:contains(currentEpisode.playUrl, 'youtu.be')}" role="radio" aria-checked="true">
                                                 <svg class="mh-tab-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"/></svg>
                                                 <span>Xem phim</span>
                                             </button>
                                             <button type="button" id="mh-btn-play-trailer" class="mh-switcher-tab"
                                                     data-trailer-url="<c:out value="${movie.trailerPlayUrl}" escapeXml="true" />"
-                                                    data-is-youtube="${movie.trailerYouTube}" role="radio" aria-checked="false">
+                                                    data-is-youtube="${movie.trailerYouTube or fn:contains(movie.trailerPlayUrl, 'youtube.com') or fn:contains(movie.trailerPlayUrl, 'youtu.be')}" role="radio" aria-checked="false">
                                                 <svg class="mh-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
                                                 <span>Xem trailer</span>
                                             </button>
@@ -136,7 +136,7 @@
                                            data-ep-number="${ep.number}"
                                            data-ep-title="<c:out value="${ep.title}" escapeXml="true" />"
                                            data-ep-url="<c:out value="${ep.playUrl}" escapeXml="true" />"
-                                           data-is-youtube="${ep.youtube}">
+                                           data-is-youtube="${ep.youtube or fn:contains(ep.playUrl, 'youtube.com') or fn:contains(ep.playUrl, 'youtu.be')}">
                                             <span class="mh-ep-play-dot" aria-hidden="true"></span>
                                             <span><c:out value="${ep.title}" /></span>
                                         </a>

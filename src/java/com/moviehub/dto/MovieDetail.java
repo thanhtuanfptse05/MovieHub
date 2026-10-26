@@ -149,8 +149,16 @@ public class MovieDetail implements Serializable {
         return trailerYouTube;
     }
 
+    public boolean getTrailerYouTube() {
+        return trailerYouTube;
+    }
+
     public boolean isHasTrailer() {
         return trailerPlayUrl != null && !trailerPlayUrl.isEmpty();
+    }
+
+    public boolean getHasTrailer() {
+        return isHasTrailer();
     }
 
     /** Main source: default episode play URL, else trailer play URL. */

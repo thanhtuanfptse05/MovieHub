@@ -45,6 +45,14 @@ public class EpisodeItem implements Serializable {
         return youtube;
     }
 
+    public boolean getYoutube() {
+        return youtube;
+    }
+
+    public boolean isYouTube() {
+        return youtube;
+    }
+
     public String getYouTubeId() {
         return youTubeId;
     }
