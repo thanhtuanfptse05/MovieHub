@@ -1158,4 +1158,258 @@ select.mh-input { appearance: auto; padding: 0 12px; }
   color: #facc15;
 }
 
+/* ==========================================================================
+   Cinema-Grade Error Presentation System (403, 404, 500)
+   ========================================================================== */
+.mh-error-page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  min-height: calc(100vh - 80px);
+  position: relative;
+  overflow: hidden;
+  background: 
+    radial-gradient(circle at 50% 15%, rgba(255, 83, 91, 0.08) 0%, transparent 55%),
+    radial-gradient(circle at 20% 80%, rgba(147, 51, 234, 0.05) 0%, transparent 45%),
+    radial-gradient(circle at 80% 85%, rgba(251, 180, 0, 0.05) 0%, transparent 45%),
+    var(--mh-bg);
+}
+
+.mh-error-page-500 {
+  background: 
+    radial-gradient(circle at 50% 15%, rgba(255, 83, 91, 0.14) 0%, transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(220, 38, 38, 0.08) 0%, transparent 50%),
+    var(--mh-bg);
+}
+
+.mh-error-page-404 {
+  background: 
+    radial-gradient(circle at 50% 15%, rgba(59, 130, 246, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(251, 180, 0, 0.06) 0%, transparent 50%),
+    var(--mh-bg);
+}
+
+.mh-error-page-403 {
+  background: 
+    radial-gradient(circle at 50% 15%, rgba(251, 180, 0, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
+    var(--mh-bg);
+}
+
+.mh-error-card {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(28, 31, 42, 0.78);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 24px;
+  padding: 48px 40px;
+  text-align: center;
+  box-shadow: 
+    0 24px 64px -12px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  position: relative;
+  z-index: 10;
+  animation: mhFadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes mhFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.mh-error-visual {
+  margin: 0 auto 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 26px;
+  position: relative;
+}
+
+.mh-error-visual-500 {
+  background: radial-gradient(circle, rgba(255, 83, 91, 0.2) 0%, rgba(255, 83, 91, 0.04) 70%);
+  border: 1px solid rgba(255, 83, 91, 0.3);
+  color: var(--mh-accent);
+  box-shadow: 0 0 32px rgba(255, 83, 91, 0.22);
+}
+
+.mh-error-visual-404 {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.04) 70%);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #60a5fa;
+  box-shadow: 0 0 32px rgba(59, 130, 246, 0.22);
+}
+
+.mh-error-visual-403 {
+  background: radial-gradient(circle, rgba(251, 180, 0, 0.2) 0%, rgba(251, 180, 0, 0.04) 70%);
+  border: 1px solid rgba(251, 180, 0, 0.3);
+  color: var(--mh-rating);
+  box-shadow: 0 0 32px rgba(251, 180, 0, 0.22);
+}
+
+.mh-error-visual svg {
+  width: 44px;
+  height: 44px;
+}
+
+.mh-error-code {
+  font-family: var(--mh-font-display);
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  margin-bottom: 12px;
+}
+
+.mh-error-code-500 {
+  background: linear-gradient(135deg, #ffffff 30%, var(--mh-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mh-error-code-404 {
+  background: linear-gradient(135deg, #ffffff 30%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mh-error-code-403 {
+  background: linear-gradient(135deg, #ffffff 30%, var(--mh-rating) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mh-error-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #f4f4f5;
+  margin-bottom: 12px;
+}
+
+.mh-error-desc {
+  font-size: 0.95rem;
+  color: #a1a1aa;
+  line-height: 1.6;
+  max-width: 460px;
+  margin: 0 auto 28px;
+}
+
+.mh-correlation-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.36);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 6px 14px 6px 16px;
+  font-size: 0.85rem;
+  color: #d4d4d8;
+  margin-bottom: 28px;
+}
+
+.mh-correlation-pill code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 700;
+  color: var(--mh-accent-soft);
+  letter-spacing: 0.08em;
+}
+
+.mh-copy-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e4e4e7;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mh-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.mh-error-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.mh-btn-secondary {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #e4e4e7;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.mh-btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.mh-error-quicknav {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+}
+
+.mh-error-quicknav a {
+  color: #71717a;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.mh-error-quicknav a:hover {
+  color: var(--mh-accent-soft);
+  text-decoration: none;
+}
+
+.mh-error-quicknav span {
+  color: #3f3f46;
+}
+
+@media (max-width: 640px) {
+  .mh-error-card {
+    padding: 32px 20px;
+  }
+  .mh-error-code {
+    font-size: 3.8rem;
+  }
+  .mh-error-title {
+    font-size: 1.35rem;
+  }
+  .mh-error-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .mh-error-actions .mh-btn {
+    width: 100%;
+  }
+}
+
 

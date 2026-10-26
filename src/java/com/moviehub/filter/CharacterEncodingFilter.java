@@ -30,7 +30,8 @@ public class CharacterEncodingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        if (request instanceof HttpServletRequest httpRequest) {
+        if (request instanceof HttpServletRequest) {
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
             String path = httpRequest.getServletPath();
             if (path == null || path.isEmpty()) {
                 path = httpRequest.getRequestURI();
